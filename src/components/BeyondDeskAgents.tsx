@@ -54,114 +54,146 @@ const PATHS = [
   "M 200 168 Q 200 138 200 102",
 ];
 
-/** Fixed starfield (deterministic, lightweight) */
-const STARS: { x: number; y: number; r: number; o: number }[] = [
-  { x: 18, y: 22, r: 0.35, o: 0.45 },
-  { x: 42, y: 8, r: 0.25, o: 0.7 },
-  { x: 67, y: 95, r: 0.2, o: 0.35 },
-  { x: 95, y: 38, r: 0.4, o: 0.55 },
-  { x: 112, y: 12, r: 0.2, o: 0.9 },
-  { x: 128, y: 78, r: 0.3, o: 0.4 },
-  { x: 155, y: 45, r: 0.25, o: 0.65 },
-  { x: 178, y: 18, r: 0.35, o: 0.5 },
-  { x: 188, y: 155, r: 0.22, o: 0.8 },
-  { x: 215, y: 32, r: 0.28, o: 0.45 },
-  { x: 238, y: 8, r: 0.4, o: 0.35 },
-  { x: 262, y: 72, r: 0.2, o: 0.55 },
-  { x: 285, y: 118, r: 0.32, o: 0.4 },
-  { x: 308, y: 28, r: 0.25, o: 0.75 },
-  { x: 332, y: 92, r: 0.35, o: 0.3 },
-  { x: 358, y: 14, r: 0.22, o: 0.85 },
-  { x: 382, y: 48, r: 0.3, o: 0.5 },
-  { x: 8, y: 120, r: 0.2, o: 0.6 },
-  { x: 34, y: 168, r: 0.28, o: 0.4 },
-  { x: 56, y: 142, r: 0.18, o: 0.9 },
-  { x: 88, y: 182, r: 0.35, o: 0.35 },
-  { x: 145, y: 188, r: 0.22, o: 0.55 },
-  { x: 320, y: 168, r: 0.25, o: 0.45 },
-  { x: 368, y: 175, r: 0.3, o: 0.4 },
-  { x: 392, y: 132, r: 0.2, o: 0.7 },
-  { x: 24, y: 62, r: 0.15, o: 0.5 },
-  { x: 200, y: 6, r: 0.4, o: 0.55 },
-  { x: 400, y: 88, r: 0.2, o: 0.45 },
-  { x: 172, y: 112, r: 0.18, o: 0.65 },
-  { x: 228, y: 98, r: 0.2, o: 0.5 },
-  { x: 118, y: 58, r: 0.25, o: 0.4 },
-  { x: 292, y: 52, r: 0.22, o: 0.6 },
-  { x: 48, y: 104, r: 0.2, o: 0.35 },
-  { x: 350, y: 138, r: 0.28, o: 0.5 },
-  { x: 14, y: 178, r: 0.22, o: 0.45 },
-  { x: 76, y: 26, r: 0.18, o: 0.75 },
-  { x: 244, y: 142, r: 0.2, o: 0.4 },
-  { x: 268, y: 12, r: 0.32, o: 0.5 },
-  { x: 198, y: 76, r: 0.15, o: 0.55 },
-  { x: 312, y: 108, r: 0.2, o: 0.45 },
-  { x: 164, y: 26, r: 0.2, o: 0.65 },
-  { x: 384, y: 96, r: 0.25, o: 0.4 },
-];
+const COSMIC_W = 1000;
+const COSMIC_H = 620;
+
+/** Dense, colorful starfield — full-bleed cosmic canvas */
+const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }[] = (() => {
+  const palette = [
+    "#ffffff",
+    "#fef08a",
+    "#fde047",
+    "#a5f3fc",
+    "#fda4af",
+    "#e9d5ff",
+    "#bbf7d0",
+    "#fcd34d",
+    "#f0abfc",
+    "#7dd3fc",
+  ];
+  let s = 314159;
+  const out: { x: number; y: number; r: number; o: number; fill: string }[] = [];
+  for (let i = 0; i < 380; i++) {
+    s = (s * 48271 + 11) % 2147483647;
+    const x = s % COSMIC_W;
+    s = (s * 48271 + 11) % 2147483647;
+    const y = s % COSMIC_H;
+    s = (s * 48271 + 11) % 2147483647;
+    const bright = s % 11 === 0;
+    const r = bright ? 0.55 + (s % 18) / 35 : 0.1 + (s % 22) / 120;
+    const o = bright ? 0.65 + (s % 30) / 100 : 0.25 + (s % 55) / 100;
+    const fill = palette[s % palette.length];
+    out.push({ x, y, r, o, fill });
+  }
+  return out;
+})();
 
 export default function BeyondDeskAgents() {
   return (
     <div className="overflow-hidden rounded-2xl border border-[#3c3c3c] bg-[#0d1117] shadow-[0_32px_80px_-28px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04]">
-      {/* Title bar — subtle deep-space strip */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#2a2540]/80 bg-gradient-to-r from-[#0a0814] via-[#12101c] to-[#080c18] px-4 py-2.5">
-        <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#8b949e] sm:text-xs">
-          <span className="truncate text-[#58a6ff]">life-orchestrator</span>
-          <span className="text-[#484f58]">·</span>
-          <span className="hidden sm:inline">multi-agent</span>
-          <span className="rounded border border-[#30363d] bg-[#21262d] px-1.5 py-0.5 text-[10px] text-[#c9d1d9]">
-            3 agents
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#3fb950]">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3fb950] opacity-40" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3fb950]" />
-          </span>
-          merged_context
-        </div>
-      </div>
-
-      {/* Cosmic orchestrator: space + planets + sun */}
-      <div className="relative overflow-hidden border-b border-[#2a2540]/80 px-3 py-8 sm:px-6 sm:py-10">
-        <p className="relative z-[1] mb-6 text-center font-mono text-[11px] text-indigo-200/75 sm:text-xs">
-          <span className="text-amber-200/90">✦</span> Three worlds in orbit — streams converge at the sun:{" "}
-          <span className="text-amber-100/90">merge ctx</span>.
-        </p>
-
-        <div
-          className="relative z-[1] mx-auto max-w-3xl"
-          role="img"
-          aria-label="Cosmic diagram: builder, learner, and home as planets with paths of light flowing into a central sun labeled merge context"
-        >
+      {/* Full cosmic canvas: title bar + copy + diagram — ends above terminal */}
+      <div className="relative min-h-[420px] sm:min-h-[520px]">
+        {/* Full-bleed colorful space + stars */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <svg
-            className="h-auto w-full drop-shadow-[0_0_40px_rgba(88,28,135,0.15)]"
-            viewBox="0 0 400 200"
-            fill="none"
+            className="h-full w-full"
+            viewBox={`0 0 ${COSMIC_W} ${COSMIC_H}`}
+            preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden
           >
             <defs>
-              <linearGradient id="beyondDeskCosmicVoid" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#03040a" />
-                <stop offset="35%" stopColor="#0a0c1a" />
-                <stop offset="65%" stopColor="#0f0820" />
-                <stop offset="100%" stopColor="#040208" />
+              <linearGradient id="beyondDeskCosmicSkyBase" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1e0b4d" />
+                <stop offset="28%" stopColor="#312e81" />
+                <stop offset="52%" stopColor="#0e7490" />
+                <stop offset="78%" stopColor="#4c1d95" />
+                <stop offset="100%" stopColor="#0f172a" />
               </linearGradient>
-              <radialGradient id="beyondDeskNebulaViolet" cx="22%" cy="18%" r="55%">
-                <stop offset="0%" stopColor="#6d28d9" stopOpacity="0.35" />
-                <stop offset="50%" stopColor="#4c1d95" stopOpacity="0.12" />
+              <radialGradient id="beyondDeskCosmicNebulaPink" cx="18%" cy="18%" r="55%">
+                <stop offset="0%" stopColor="#f472b6" stopOpacity="0.65" />
+                <stop offset="35%" stopColor="#c026d3" stopOpacity="0.4" />
                 <stop offset="100%" stopColor="transparent" />
               </radialGradient>
-              <radialGradient id="beyondDeskNebulaTeal" cx="88%" cy="75%" r="45%">
-                <stop offset="0%" stopColor="#0891b2" stopOpacity="0.22" />
+              <radialGradient id="beyondDeskCosmicNebulaCyan" cx="88%" cy="22%" r="58%">
+                <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.7" />
+                <stop offset="40%" stopColor="#2563eb" stopOpacity="0.35" />
                 <stop offset="100%" stopColor="transparent" />
               </radialGradient>
-              <radialGradient id="beyondDeskNebulaRose" cx="50%" cy="100%" r="50%">
-                <stop offset="0%" stopColor="#be185d" stopOpacity="0.15" />
+              <radialGradient id="beyondDeskCosmicNebulaGold" cx="50%" cy="100%" r="50%">
+                <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.55" />
+                <stop offset="45%" stopColor="#f97316" stopOpacity="0.28" />
                 <stop offset="100%" stopColor="transparent" />
               </radialGradient>
+              <radialGradient id="beyondDeskCosmicNebulaViolet" cx="72%" cy="58%" r="50%">
+                <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.5" />
+                <stop offset="50%" stopColor="#7c3aed" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+              <radialGradient id="beyondDeskCosmicNebulaEmerald" cx="28%" cy="72%" r="48%">
+                <stop offset="0%" stopColor="#34d399" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+            </defs>
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicSkyBase)" />
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicNebulaPink)" />
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicNebulaCyan)" />
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicNebulaGold)" />
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicNebulaViolet)" />
+            <rect width={COSMIC_W} height={COSMIC_H} fill="url(#beyondDeskCosmicNebulaEmerald)" />
+            {COSMIC_STARS.map((star, i) => (
+              <circle key={`cosmic-star-${i}`} cx={star.x} cy={star.y} r={star.r} fill={star.fill} opacity={star.o} />
+            ))}
+          </svg>
+          {/* Extra vivid color wash (CSS) for depth */}
+          <div
+            className="absolute inset-0 mix-blend-screen opacity-40"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(236,72,153,0.45), transparent 50%), radial-gradient(ellipse 70% 45% at 85% 25%, rgba(56,189,248,0.5), transparent 55%), radial-gradient(ellipse 60% 40% at 50% 90%, rgba(251,191,36,0.4), transparent 50%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-transparent to-[#0f0a1a]/40" />
+        </div>
 
-              <radialGradient id="beyondDeskPlanetBuilder" cx="32%" cy="30%" r="70%">
+        <div className="relative z-10 flex min-h-[100%] flex-col border-b border-white/10">
+          {/* Title bar — glass on cosmic */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/25 px-4 py-2.5 backdrop-blur-md">
+            <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#e2e8f0] sm:text-xs">
+              <span className="truncate text-[#7dd3fc] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">life-orchestrator</span>
+              <span className="text-[#94a3b8]">·</span>
+              <span className="hidden sm:inline text-cyan-300/90">multi-agent</span>
+              <span className="rounded border border-[#38bdf8]/30 bg-[#0f172a]/60 px-1.5 py-0.5 text-[10px] text-[#fef08a]">
+                3 agents
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#4ade80]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-50" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80]" />
+              </span>
+              merged_context
+            </div>
+          </div>
+
+          <p className="px-4 pt-6 text-center font-mono text-[11px] text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-6 sm:text-xs">
+            <span className="text-fuchsia-300">✦</span> Three systems I actively run in parallel — each shaping how I think, build, and operate.{" "}
+            <span className="font-medium text-cyan-200">One life</span>.
+          </p>
+
+          <div
+            className="mx-auto w-full max-w-3xl flex-1 px-3 pb-8 pt-6 sm:px-6 sm:pb-10 sm:pt-8"
+            role="img"
+            aria-label="Cosmic diagram: builder, learner, and home as planets with paths of light flowing into a central sun"
+          >
+            <svg
+              className="h-auto w-full drop-shadow-[0_0_40px_rgba(88,28,135,0.15)]"
+              viewBox="0 0 400 200"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <radialGradient id="beyondDeskPlanetBuilder" cx="32%" cy="30%" r="70%">
                 <stop offset="0%" stopColor="#93c5fd" />
                 <stop offset="40%" stopColor="#2563eb" />
                 <stop offset="78%" stopColor="#1e3a5f" />
@@ -208,15 +240,6 @@ export default function BeyondDeskAgents() {
                 </feMerge>
               </filter>
             </defs>
-
-            <rect width="400" height="200" fill="url(#beyondDeskCosmicVoid)" rx="4" />
-            <rect width="400" height="200" fill="url(#beyondDeskNebulaViolet)" rx="4" />
-            <rect width="400" height="200" fill="url(#beyondDeskNebulaTeal)" rx="4" />
-            <rect width="400" height="200" fill="url(#beyondDeskNebulaRose)" rx="4" />
-
-            {STARS.map((s, i) => (
-              <circle key={`star-${i}`} cx={s.x} cy={s.y} r={s.r} fill="#e2e8f0" opacity={s.o} />
-            ))}
 
             {/* Orbit trails */}
             {PATHS.map((d, i) => (
@@ -338,27 +361,43 @@ export default function BeyondDeskAgents() {
               life
             </text>
           </svg>
+          </div>
         </div>
       </div>
 
-      {/* Terminal — secondary detail */}
-      <div className="border-b border-[#30363d] px-4 py-4 font-mono text-[11px] leading-relaxed text-[#c9d1d9] sm:px-5 sm:text-xs">
+      {/* Terminal — tripundra-style three white lines (vibhuti) over each agent band */}
+      <div className="border-b border-[#30363d] bg-[#07080c] px-4 py-4 font-mono text-[11px] leading-relaxed text-[#c9d1d9] sm:px-5 sm:text-xs">
         <p className="text-[#8b949e]">
           <span className="text-[#79c0ff]">$</span> life status --agents
         </p>
-        <ul className="mt-3 space-y-2 border-l border-[#30363d] pl-3">
-          {agents.map((a) => (
-            <li key={a.id} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-              <span className="text-[#7ee787]">●</span>
-              <span className="text-[#79c0ff]">{a.title}</span>
-              <span className="text-[#8b949e]">RUNNING</span>
-              <span className="text-[#484f58]">—</span>
-              <span className="text-[#d2a8ff]">description:</span>
-              <span>{a.body}</span>
-            </li>
+
+        <div
+          className="mt-4 overflow-hidden rounded-sm border-2 border-white/95 bg-[#050608] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_24px_rgba(255,255,255,0.04)]"
+          role="group"
+          aria-label="agents"
+        >
+          {agents.map((a, i) => (
+            <div key={a.id}>
+              {/* Tripundra: three parallel lines; middle band often drawn slightly shorter */}
+              <div
+                className={`h-[3px] bg-white shadow-[0_0_8px_rgba(255,255,255,0.35)] ${i === 1 ? "mx-auto w-[90%]" : "w-full"}`}
+                aria-hidden
+              />
+              <div className="px-3 py-3.5 sm:px-4 sm:py-4">
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className="text-[#7ee787]">●</span>
+                  <span className="font-medium text-[#79c0ff]">{a.title}</span>
+                  <span className="text-[#8b949e]">RUNNING</span>
+                  <span className="text-[#484f58]">—</span>
+                  <span className="text-[#d2a8ff]">description:</span>
+                </div>
+                <div className="mt-2 font-sans text-[11px] leading-relaxed text-[#cbd5e1] sm:text-xs">{a.body}</div>
+              </div>
+            </div>
           ))}
-        </ul>
-        <p className="mt-4 border-t border-[#30363d] pt-3 text-[#8b949e]">
+        </div>
+
+        <p className="mt-4 border-t-2 border-white/25 pt-3 text-[#8b949e]">
           <span className="text-[#ffa657]">merge</span>
           <span className="text-[#c9d1d9]">(</span>
           <span className="text-[#79c0ff]">builder</span>
