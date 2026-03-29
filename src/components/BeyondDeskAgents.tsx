@@ -54,11 +54,57 @@ const PATHS = [
   "M 200 168 Q 200 138 200 102",
 ];
 
+/** Fixed starfield (deterministic, lightweight) */
+const STARS: { x: number; y: number; r: number; o: number }[] = [
+  { x: 18, y: 22, r: 0.35, o: 0.45 },
+  { x: 42, y: 8, r: 0.25, o: 0.7 },
+  { x: 67, y: 95, r: 0.2, o: 0.35 },
+  { x: 95, y: 38, r: 0.4, o: 0.55 },
+  { x: 112, y: 12, r: 0.2, o: 0.9 },
+  { x: 128, y: 78, r: 0.3, o: 0.4 },
+  { x: 155, y: 45, r: 0.25, o: 0.65 },
+  { x: 178, y: 18, r: 0.35, o: 0.5 },
+  { x: 188, y: 155, r: 0.22, o: 0.8 },
+  { x: 215, y: 32, r: 0.28, o: 0.45 },
+  { x: 238, y: 8, r: 0.4, o: 0.35 },
+  { x: 262, y: 72, r: 0.2, o: 0.55 },
+  { x: 285, y: 118, r: 0.32, o: 0.4 },
+  { x: 308, y: 28, r: 0.25, o: 0.75 },
+  { x: 332, y: 92, r: 0.35, o: 0.3 },
+  { x: 358, y: 14, r: 0.22, o: 0.85 },
+  { x: 382, y: 48, r: 0.3, o: 0.5 },
+  { x: 8, y: 120, r: 0.2, o: 0.6 },
+  { x: 34, y: 168, r: 0.28, o: 0.4 },
+  { x: 56, y: 142, r: 0.18, o: 0.9 },
+  { x: 88, y: 182, r: 0.35, o: 0.35 },
+  { x: 145, y: 188, r: 0.22, o: 0.55 },
+  { x: 320, y: 168, r: 0.25, o: 0.45 },
+  { x: 368, y: 175, r: 0.3, o: 0.4 },
+  { x: 392, y: 132, r: 0.2, o: 0.7 },
+  { x: 24, y: 62, r: 0.15, o: 0.5 },
+  { x: 200, y: 6, r: 0.4, o: 0.55 },
+  { x: 400, y: 88, r: 0.2, o: 0.45 },
+  { x: 172, y: 112, r: 0.18, o: 0.65 },
+  { x: 228, y: 98, r: 0.2, o: 0.5 },
+  { x: 118, y: 58, r: 0.25, o: 0.4 },
+  { x: 292, y: 52, r: 0.22, o: 0.6 },
+  { x: 48, y: 104, r: 0.2, o: 0.35 },
+  { x: 350, y: 138, r: 0.28, o: 0.5 },
+  { x: 14, y: 178, r: 0.22, o: 0.45 },
+  { x: 76, y: 26, r: 0.18, o: 0.75 },
+  { x: 244, y: 142, r: 0.2, o: 0.4 },
+  { x: 268, y: 12, r: 0.32, o: 0.5 },
+  { x: 198, y: 76, r: 0.15, o: 0.55 },
+  { x: 312, y: 108, r: 0.2, o: 0.45 },
+  { x: 164, y: 26, r: 0.2, o: 0.65 },
+  { x: 384, y: 96, r: 0.25, o: 0.4 },
+];
+
 export default function BeyondDeskAgents() {
   return (
     <div className="overflow-hidden rounded-2xl border border-[#3c3c3c] bg-[#0d1117] shadow-[0_32px_80px_-28px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04]">
-      {/* Title bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#30363d] bg-[#161b22] px-4 py-2.5">
+      {/* Title bar — subtle deep-space strip */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#2a2540]/80 bg-gradient-to-r from-[#0a0814] via-[#12101c] to-[#080c18] px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#8b949e] sm:text-xs">
           <span className="truncate text-[#58a6ff]">life-orchestrator</span>
           <span className="text-[#484f58]">·</span>
@@ -76,97 +122,220 @@ export default function BeyondDeskAgents() {
         </div>
       </div>
 
-      {/* Primary focus: agents ↔ hub (animated flow) */}
-      <div className="relative border-b border-[#30363d] bg-[radial-gradient(ellipse_85%_80%_at_50%_45%,rgba(88,166,255,0.08),transparent_55%)] px-3 py-8 sm:px-6 sm:py-10">
-        <p className="mb-6 text-center font-mono text-[11px] text-[#8b949e] sm:text-xs">
-          <span className="text-[#7ee787]">●</span> Three agents stream into one orchestrator — your attention is the merge
-          step.
+      {/* Cosmic orchestrator: space + planets + sun */}
+      <div className="relative overflow-hidden border-b border-[#2a2540]/80 px-3 py-8 sm:px-6 sm:py-10">
+        <p className="relative z-[1] mb-6 text-center font-mono text-[11px] text-indigo-200/75 sm:text-xs">
+          <span className="text-amber-200/90">✦</span> Three worlds in orbit — streams converge at the sun:{" "}
+          <span className="text-amber-100/90">merge ctx</span>.
         </p>
 
         <div
-          className="relative mx-auto max-w-3xl"
+          className="relative z-[1] mx-auto max-w-3xl"
           role="img"
-          aria-label="Diagram: three agents builder, learner, and home connect with animated lines into a central merge hub"
+          aria-label="Cosmic diagram: builder, learner, and home as planets with paths of light flowing into a central sun labeled merge context"
         >
           <svg
-            className="h-auto w-full"
+            className="h-auto w-full drop-shadow-[0_0_40px_rgba(88,28,135,0.15)]"
             viewBox="0 0 400 200"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <filter id="beyondDeskHubGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+              <linearGradient id="beyondDeskCosmicVoid" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#03040a" />
+                <stop offset="35%" stopColor="#0a0c1a" />
+                <stop offset="65%" stopColor="#0f0820" />
+                <stop offset="100%" stopColor="#040208" />
+              </linearGradient>
+              <radialGradient id="beyondDeskNebulaViolet" cx="22%" cy="18%" r="55%">
+                <stop offset="0%" stopColor="#6d28d9" stopOpacity="0.35" />
+                <stop offset="50%" stopColor="#4c1d95" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+              <radialGradient id="beyondDeskNebulaTeal" cx="88%" cy="75%" r="45%">
+                <stop offset="0%" stopColor="#0891b2" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+              <radialGradient id="beyondDeskNebulaRose" cx="50%" cy="100%" r="50%">
+                <stop offset="0%" stopColor="#be185d" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+
+              <radialGradient id="beyondDeskPlanetBuilder" cx="32%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#93c5fd" />
+                <stop offset="40%" stopColor="#2563eb" />
+                <stop offset="78%" stopColor="#1e3a5f" />
+                <stop offset="100%" stopColor="#0c1525" />
+              </radialGradient>
+              <radialGradient id="beyondDeskPlanetLearner" cx="35%" cy="28%" r="68%">
+                <stop offset="0%" stopColor="#a5f3fc" />
+                <stop offset="38%" stopColor="#06b6d4" />
+                <stop offset="75%" stopColor="#0e7490" />
+                <stop offset="100%" stopColor="#042f2e" />
+              </radialGradient>
+              <radialGradient id="beyondDeskPlanetHome" cx="30%" cy="32%" r="72%">
+                <stop offset="0%" stopColor="#fde68a" />
+                <stop offset="35%" stopColor="#d97706" />
+                <stop offset="72%" stopColor="#78350f" />
+                <stop offset="100%" stopColor="#1c1008" />
+              </radialGradient>
+
+              <radialGradient id="beyondDeskSunCore" cx="38%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#fffbeb" />
+                <stop offset="18%" stopColor="#fde047" />
+                <stop offset="45%" stopColor="#f59e0b" />
+                <stop offset="72%" stopColor="#ea580c" />
+                <stop offset="100%" stopColor="#9a3412" />
+              </radialGradient>
+              <radialGradient id="beyondDeskSunCorona" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#fcd34d" stopOpacity="0.55" />
+                <stop offset="40%" stopColor="#f97316" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+
+              <filter id="beyondDeskSoftGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="2.5" result="b" />
                 <feMerge>
-                  <feMergeNode in="blur" />
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="beyondDeskSunBloom" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="6" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
             </defs>
 
-            {/* Base paths */}
+            <rect width="400" height="200" fill="url(#beyondDeskCosmicVoid)" rx="4" />
+            <rect width="400" height="200" fill="url(#beyondDeskNebulaViolet)" rx="4" />
+            <rect width="400" height="200" fill="url(#beyondDeskNebulaTeal)" rx="4" />
+            <rect width="400" height="200" fill="url(#beyondDeskNebulaRose)" rx="4" />
+
+            {STARS.map((s, i) => (
+              <circle key={`star-${i}`} cx={s.x} cy={s.y} r={s.r} fill="#e2e8f0" opacity={s.o} />
+            ))}
+
+            {/* Orbit trails */}
             {PATHS.map((d, i) => (
               <path
                 key={`base-${agents[i].id}`}
                 d={d}
-                stroke="#30363d"
+                stroke="rgba(99, 102, 241, 0.22)"
                 strokeWidth="3"
                 strokeLinecap="round"
                 fill="none"
               />
             ))}
-
-            {/* Animated flow — reads as data moving between agents */}
             {PATHS.map((d, i) => (
               <path
                 key={`flow-${agents[i].id}`}
                 d={d}
                 stroke={agents[i].lineColor}
-                strokeWidth="2"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 fill="none"
-                strokeDasharray="6 14"
-                className="animate-agent-dash opacity-90"
+                strokeDasharray="5 12"
+                className="animate-agent-dash opacity-[0.85]"
               />
             ))}
 
-            <text x="72" y="28" textAnchor="middle" fill="#58a6ff" fontSize="11" fontFamily="ui-monospace, monospace">
-              builder
-            </text>
-            <text x="328" y="28" textAnchor="middle" fill="#22d3ee" fontSize="11" fontFamily="ui-monospace, monospace">
-              learner
-            </text>
-            <text x="200" y="196" textAnchor="middle" fill="#fbbf24" fontSize="11" fontFamily="ui-monospace, monospace">
-              home
-            </text>
-
-            <circle cx="72" cy="48" r="13" fill="#161b22" stroke="#58a6ff" strokeWidth="2" />
-            <circle cx="328" cy="48" r="13" fill="#161b22" stroke="#22d3ee" strokeWidth="2" />
-            <circle cx="200" cy="168" r="13" fill="#161b22" stroke="#fbbf24" strokeWidth="2" />
-
+            {/* Sun — corona then core */}
+            <circle cx="200" cy="102" r="48" fill="url(#beyondDeskSunCorona)" className="animate-hub-pulse" />
+            <circle cx="200" cy="102" r="38" fill="url(#beyondDeskSunCorona)" opacity="0.35" />
             <circle
               cx="200"
               cy="102"
-              r="28"
+              r="24"
+              fill="url(#beyondDeskSunCore)"
+              stroke="#fbbf24"
+              strokeWidth="1.2"
+              strokeOpacity="0.85"
+              filter="url(#beyondDeskSunBloom)"
+            />
+
+            {/* Planet atmospheres */}
+            <circle cx="72" cy="48" r="18" fill="#3b82f6" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
+            <circle cx="328" cy="48" r="18" fill="#22d3ee" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
+            <circle cx="200" cy="168" r="18" fill="#f59e0b" opacity="0.14" filter="url(#beyondDeskSoftGlow)" />
+
+            {/* Planets */}
+            <circle cx="72" cy="48" r="13" fill="url(#beyondDeskPlanetBuilder)" stroke="#60a5fa" strokeWidth="1.2" />
+            <circle cx="328" cy="48" r="13" fill="url(#beyondDeskPlanetLearner)" stroke="#67e8f9" strokeWidth="1.2" />
+            {/* Ring world (home) */}
+            <ellipse
+              cx="200"
+              cy="168"
+              rx="22"
+              ry="5"
+              transform="rotate(-18 200 168)"
+              stroke="#fcd34d"
+              strokeWidth="1"
+              strokeOpacity="0.55"
               fill="none"
-              stroke="#3fb950"
-              strokeWidth="1.5"
-              className="animate-hub-pulse"
             />
-            <circle
-              cx="200"
-              cy="102"
-              r="22"
-              fill="#0d1117"
-              stroke="#3fb950"
-              strokeWidth="2"
-              filter="url(#beyondDeskHubGlow)"
-            />
-            <text x="200" y="99" textAnchor="middle" fill="#7ee787" fontSize="10" fontFamily="ui-monospace, monospace">
-              merge
+            <circle cx="200" cy="168" r="13" fill="url(#beyondDeskPlanetHome)" stroke="#fbbf24" strokeWidth="1.2" />
+
+            {/* Labels */}
+            <text
+              x="72"
+              y="28"
+              textAnchor="middle"
+              fill="#bfdbfe"
+              fontSize="11"
+              fontFamily="ui-monospace, monospace"
+              style={{ textShadow: "0 0 12px rgba(37,99,235,0.9)" }}
+            >
+              Builder Agent
             </text>
-            <text x="200" y="111" textAnchor="middle" fill="#8b949e" fontSize="8" fontFamily="ui-monospace, monospace">
-              ctx
+            <text
+              x="328"
+              y="28"
+              textAnchor="middle"
+              fill="#a5f3fc"
+              fontSize="11"
+              fontFamily="ui-monospace, monospace"
+              style={{ textShadow: "0 0 12px rgba(6,182,212,0.85)" }}
+            >
+              Learner Agent
+            </text>
+            <text
+              x="200"
+              y="196"
+              textAnchor="middle"
+              fill="#fde68a"
+              fontSize="11"
+              fontFamily="ui-monospace, monospace"
+              style={{ textShadow: "0 0 14px rgba(217,119,6,0.85)" }}
+            >
+              Home Agent
+            </text>
+
+            <text
+              x="200"
+              y="98"
+              textAnchor="middle"
+              fill="#1c1917"
+              fontSize="10"
+              fontWeight="700"
+              fontFamily="ui-monospace, monospace"
+              style={{ textShadow: "0 0 6px rgba(255,251,235,0.95), 0 1px 0 rgba(0,0,0,0.4)" }}
+            >
+              One
+            </text>
+            <text
+              x="200"
+              y="110"
+              textAnchor="middle"
+              fill="#422006"
+              fontSize="8"
+              fontFamily="ui-monospace, monospace"
+              fontWeight="600"
+              style={{ textShadow: "0 0 4px rgba(254,243,199,0.8)" }}
+            >
+              life
             </text>
           </svg>
         </div>
@@ -181,11 +350,11 @@ export default function BeyondDeskAgents() {
           {agents.map((a) => (
             <li key={a.id} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               <span className="text-[#7ee787]">●</span>
-              <span className="text-[#79c0ff]">{a.id}</span>
+              <span className="text-[#79c0ff]">{a.title}</span>
               <span className="text-[#8b949e]">RUNNING</span>
               <span className="text-[#484f58]">—</span>
-              <span className="text-[#d2a8ff]">role:</span>
-              <span>{a.title}</span>
+              <span className="text-[#d2a8ff]">description:</span>
+              <span>{a.body}</span>
             </li>
           ))}
         </ul>
@@ -204,7 +373,7 @@ export default function BeyondDeskAgents() {
       </div>
 
       {/* Cards — supporting detail; smaller imagery so diagram stays hero */}
-      <div className="grid gap-0 border-t border-[#30363d] bg-[#0a0d12] sm:grid-cols-2 lg:grid-cols-3">
+      {/* <div className="grid gap-0 border-t border-[#30363d] bg-[#0a0d12] sm:grid-cols-2 lg:grid-cols-3">
         {agents.map((a, i) => (
           <article
             key={a.id}
@@ -235,7 +404,7 @@ export default function BeyondDeskAgents() {
             </div>
           </article>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
