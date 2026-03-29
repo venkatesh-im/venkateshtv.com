@@ -44,6 +44,19 @@ const config: Config = {
         "glow-brand": "0 0 24px rgba(37, 99, 235, 0.35)",
         "glow-brand-lg": "0 0 48px rgba(37, 99, 235, 0.4)",
       },
+      keyframes: {
+        "agent-dash": {
+          to: { strokeDashoffset: "-48" },
+        },
+        "hub-pulse": {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "1" },
+        },
+      },
+      animation: {
+        "agent-dash": "agent-dash 2.2s linear infinite",
+        "hub-pulse": "hub-pulse 3s ease-in-out infinite",
+      },
       typography: {
         DEFAULT: {
           css: {
