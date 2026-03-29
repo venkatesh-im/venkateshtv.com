@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostCard from "@/components/PostCard";
 import ProfilePhoto from "@/components/ProfilePhoto";
-import SectionFeatureCard from "@/components/SectionFeatureCard";
+import BeyondDeskAgents from "@/components/BeyondDeskAgents";
 import ConversationsIDE from "@/components/ConversationsIDE";
 import { prisma } from "@/lib/prisma";
 
@@ -154,51 +154,15 @@ export default async function HomePage() {
                 <h2 className="font-display text-3xl font-medium tracking-[-0.02em] text-white sm:text-4xl">
                   Life outside the terminal
                 </h2>
-                <p className="mt-2 max-w-md font-sans text-sm text-slate-500 sm:text-base">
-                  The habits and people that keep perspective sharp.
+                <p className="mt-2 max-w-xl font-sans text-sm text-slate-500 sm:text-base">
+                  I think of life outside work as three agents running in parallel — builder, learner, and home — merged
+                  into one day.
                 </p>
               </div>
               <div className="hidden h-px w-full max-w-xs bg-gradient-to-r from-blue-500/40 via-cyan-500/25 to-transparent sm:mb-2 sm:block" />
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <SectionFeatureCard
-                src="/images/sections/section-life-builder.png"
-                alt="Placeholder art: coding and building (replace with your photo)"
-                title="Hands-on builder"
-                accent="blue"
-              >
-                <p>
-                  I still <span className="text-slate-200">write code</span> — it keeps me honest about what we ask teams
-                  to ship.
-                </p>
-              </SectionFeatureCard>
-
-              <SectionFeatureCard
-                src="/images/sections/section-life-learning.png"
-                alt="Placeholder art: reading and research (replace with your photo)"
-                title="Always learning"
-                accent="cyan"
-              >
-                <p>
-                  I read <span className="text-slate-200">tech articles and papers</span> constantly — AI moves fast;
-                  curiosity is a habit.
-                </p>
-              </SectionFeatureCard>
-
-              <SectionFeatureCard
-                src="/images/sections/section-life-family.png"
-                alt="Placeholder art: family and dog (replace with your photo)"
-                title="Family & a beagle"
-                accent="amber"
-                wideOnSm
-              >
-                <p>
-                  Away from work, I&apos;m with <span className="text-slate-200">family</span> — and our beagle, who has
-                  strong opinions about walk times and treats.
-                </p>
-              </SectionFeatureCard>
-            </div>
+            <BeyondDeskAgents />
           </div>
         </section>
 
