@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getAuthToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 // GET /api/posts — public, returns all published posts
@@ -10,8 +9,8 @@ export async function GET(request: NextRequest) {
     const all = searchParams.get("all");
 
     // Check if admin is requesting all posts (including drafts)
-    const session = await getServerSession(authOptions);
-    const isAdmin = !!session?.user;
+    const token = await getAuthToken(request);
+    const isAdmin = !!token;
 
     const posts = await prisma.post.findMany({
       where: all && isAdmin ? {} : { published: true },
@@ -37,8 +36,8 @@ export async function GET(request: NextRequest) {
 // POST /api/posts — admin only, creates a new post
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    const token = await getAuthToken(request);
+    if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

@@ -24,15 +24,30 @@ export default async function AdminLayout({
 
   return (
     <SessionProvider session={session}>
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen" style={{ background: "#05070f" }}>
         {/* Admin top bar */}
-        <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+        <div
+          className="px-4 py-3 flex items-center justify-between border-b"
+          style={{
+            background: "rgba(13, 17, 23, 0.9)",
+            borderColor: "rgba(255,255,255,0.06)",
+            backdropFilter: "blur(12px)",
+            position: "sticky",
+            top: 0,
+            zIndex: 40,
+          }}
+        >
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 bg-sky-600 rounded flex items-center justify-center text-white text-xs font-bold">
+            <div
+              className="w-7 h-7 rounded flex items-center justify-center text-white text-xs font-bold"
+              style={{ background: "linear-gradient(135deg, #2563eb, #0891b2)" }}
+            >
               V
             </div>
-            <span className="text-sm font-semibold text-slate-900">venkateshtv.com</span>
-            <span className="text-slate-300">/</span>
+            <span className="text-sm font-semibold text-white">
+              venkateshtv.com
+            </span>
+            <span className="text-slate-600">/</span>
             <span className="text-sm text-slate-500">Admin</span>
           </div>
         </div>

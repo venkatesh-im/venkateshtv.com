@@ -9,22 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* Impelox-aligned blues (primary UI) */
         brand: {
-          50: "#f0f9ff",
-          100: "#e0f2fe",
-          200: "#bae6fd",
-          300: "#7dd3fc",
-          400: "#38bdf8",
-          500: "#0ea5e9",
-          600: "#0284c7",
-          700: "#0369a1",
-          800: "#075985",
-          900: "#0c4a6e",
-          950: "#082f49",
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
+          950: "#172554",
+        },
+        surface: {
+          DEFAULT: "#0d1117",
+          elevated: "#161b27",
+        },
+        bg: {
+          DEFAULT: "#030712",
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-dm)", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
+        serif: ["var(--font-newsreader)", "Georgia", "serif"],
+      },
+      backgroundImage: {
+        "gradient-brand": "linear-gradient(135deg, #2563eb, #0891b2)",
+        "gradient-text": "linear-gradient(135deg, #60a5fa, #38bdf8, #22d3ee)",
+      },
+      boxShadow: {
+        "glow-brand": "0 0 24px rgba(37, 99, 235, 0.35)",
+        "glow-brand-lg": "0 0 48px rgba(37, 99, 235, 0.4)",
       },
       typography: {
         DEFAULT: {

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getAuthToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 interface Params {
@@ -10,8 +9,8 @@ interface Params {
 // GET /api/posts/[id] — returns a single post (public: only published, admin: any)
 export async function GET(request: NextRequest, { params }: Params) {
   try {
-    const session = await getServerSession(authOptions);
-    const isAdmin = !!session?.user;
+    const token = await getAuthToken(request);
+    const isAdmin = !!token;
 
     const post = await prisma.post.findUnique({
       where: isAdmin ? { id: params.id } : { id: params.id, published: true },
@@ -31,8 +30,8 @@ export async function GET(request: NextRequest, { params }: Params) {
 // PUT /api/posts/[id] — admin only, updates a post
 export async function PUT(request: NextRequest, { params }: Params) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    const token = await getAuthToken(request);
+    if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -95,8 +94,8 @@ export async function PUT(request: NextRequest, { params }: Params) {
 // DELETE /api/posts/[id] — admin only, deletes a post
 export async function DELETE(request: NextRequest, { params }: Params) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    const token = await getAuthToken(request);
+    if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

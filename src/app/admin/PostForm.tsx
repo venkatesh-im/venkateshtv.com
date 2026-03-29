@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { slugify } from "@/lib/utils";
+import { slugify, stripHtml } from "@/lib/utils";
 
 // Dynamically import TipTap to avoid SSR issues
 const TipTapEditor = dynamic(() => import("@/components/TipTapEditor"), {
@@ -77,8 +77,9 @@ export default function PostForm({ mode, post }: PostFormProps) {
       setError("Slug is required");
       return;
     }
-    if (!content || content === "<p></p>") {
-      setError("Content is required");
+    const textContent = stripHtml(content).trim();
+    if (!textContent) {
+      setError("Content is required — add some text in the editor body.");
       return;
     }
 
@@ -98,6 +99,7 @@ export default function PostForm({ mode, post }: PostFormProps) {
 
       const res = await fetch(url, {
         method,
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });

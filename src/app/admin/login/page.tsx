@@ -40,20 +40,75 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12 px-4">
-      <div className="w-full max-w-md">
+    <div
+      className="min-h-screen flex items-center justify-center py-12 px-4 relative overflow-hidden"
+      style={{ background: "#05070f" }}
+    >
+      {/* Background effects */}
+      <div
+        className="absolute inset-0 opacity-100"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          width: "500px",
+          height: "500px",
+          background:
+            "radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)",
+          borderRadius: "50%",
+          top: "-100px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div className="w-full max-w-md relative z-10">
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-sky-600 rounded-xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-5"
+            style={{
+              background: "linear-gradient(135deg, #2563eb, #0891b2)",
+              boxShadow: "0 0 24px rgba(37, 99, 235, 0.45)",
+            }}
+          >
             V
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Admin Login</h1>
-          <p className="text-slate-500 mt-1.5 text-sm">Sign in to manage your website</p>
+          <h1
+            className="text-2xl font-bold text-white mb-1.5"
+            style={{ letterSpacing: "-0.025em" }}
+          >
+            Admin Portal
+          </h1>
+          <p className="text-sm text-slate-500">Sign in to manage your website</p>
         </div>
 
-        <div className="card p-8">
+        {/* Form card */}
+        <div
+          className="p-8 rounded-2xl"
+          style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            backdropFilter: "blur(12px)",
+          }}
+        >
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+              <div
+                className="text-sm rounded-lg px-4 py-3"
+                style={{
+                  background: "rgba(220, 38, 38, 0.1)",
+                  border: "1px solid rgba(220, 38, 38, 0.2)",
+                  color: "#fca5a5",
+                }}
+              >
                 {error}
               </div>
             )}
@@ -93,13 +148,25 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary justify-center py-2.5 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-primary w-full justify-center"
+              style={{ paddingTop: "12px", paddingBottom: "12px" }}
             >
               {loading ? (
                 <>
                   <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Signing in...
                 </>
@@ -110,8 +177,8 @@ export default function AdminLoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">
-          Protected admin area for venkateshtv.com
+        <p className="text-center text-xs text-slate-600 mt-6">
+          Protected admin area · venkateshtv.com
         </p>
       </div>
     </div>

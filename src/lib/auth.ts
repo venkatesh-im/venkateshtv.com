@@ -1,6 +1,16 @@
 import { NextAuthOptions } from "next-auth";
+import { getToken } from "next-auth/jwt";
+import type { NextRequest } from "next/server";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcryptjs from "bcryptjs";
+
+/** Use in Route Handlers — `getServerSession` often misses cookies on API `fetch`; `getToken` matches middleware. */
+export async function getAuthToken(request: NextRequest) {
+  return getToken({
+    req: request as any,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
