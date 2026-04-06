@@ -151,13 +151,13 @@ export default async function HomePage() {
                 <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[0.35em] text-blue-400/90">
                   Beyond the desk
                 </p>
-                {/* <h2 className="font-display text-3xl font-medium tracking-[-0.02em] text-white sm:text-4xl">
+                <h2 className="font-display text-3xl font-medium tracking-[-0.02em] text-white sm:text-4xl">
                   Life outside the terminal
                 </h2>
                 <p className="mt-2 max-w-xl font-sans text-sm text-slate-500 sm:text-base">
                   I think of life outside work as three agents running in parallel — builder, learner, and home — merged
                   into one day.
-                </p> */}
+                </p>
               </div>
               <div className="hidden h-px w-full max-w-xs bg-gradient-to-r from-blue-500/40 via-cyan-500/25 to-transparent sm:mb-2 sm:block" />
             </div>

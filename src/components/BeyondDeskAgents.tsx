@@ -1,12 +1,9 @@
-import Image from "next/image";
-
 const agents = [
   {
     id: "builder-agent",
     title: "Hands-on builder",
     borderClass: "border-l-blue-500/70",
     dotClass: "bg-blue-400",
-    lineColor: "#58a6ff",
     src: "/images/sections/section-life-builder.png",
     alt: "Placeholder art: coding and building (replace with your photo)",
     body: (
@@ -20,7 +17,6 @@ const agents = [
     title: "Always learning",
     borderClass: "border-l-cyan-500/70",
     dotClass: "bg-cyan-400",
-    lineColor: "#22d3ee",
     src: "/images/sections/section-life-learning.png",
     alt: "Placeholder art: reading and research (replace with your photo)",
     body: (
@@ -35,7 +31,6 @@ const agents = [
     title: "Family & a beagle",
     borderClass: "border-l-amber-500/70",
     dotClass: "bg-amber-400",
-    lineColor: "#fbbf24",
     src: "/images/sections/section-life-family.png",
     alt: "Placeholder art: family and dog (replace with your photo)",
     body: (
@@ -45,13 +40,6 @@ const agents = [
       </>
     ),
   },
-];
-
-/** Hub-and-spoke paths: builder (TL), learner (TR), home (B) → center merge */
-const PATHS = [
-  "M 72 48 Q 130 78 200 102",
-  "M 328 48 Q 270 78 200 102",
-  "M 200 168 Q 200 138 200 102",
 ];
 
 const COSMIC_W = 1000;
@@ -91,8 +79,8 @@ const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }
 export default function BeyondDeskAgents() {
   return (
     <div className="overflow-hidden rounded-2xl border border-[#3c3c3c] bg-[#0d1117] shadow-[0_32px_80px_-28px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04]">
-      {/* Full cosmic canvas: title bar + copy + diagram — ends above terminal */}
-      <div className="relative min-h-[420px] sm:min-h-[520px]">
+      {/* Full cosmic canvas: title bar, tagline, tripundra + life status (third eye at center band) */}
+      <div className="relative flex min-h-[480px] flex-col sm:min-h-[580px]">
         {/* Full-bleed colorful space + stars */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <svg
@@ -156,7 +144,7 @@ export default function BeyondDeskAgents() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-transparent to-[#0f0a1a]/40" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100%] flex-col border-b border-white/10">
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col border-b border-white/10 pb-6">
           {/* Title bar — glass on cosmic */}
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/25 px-4 py-2.5 backdrop-blur-md">
             <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#e2e8f0] sm:text-xs">
@@ -178,237 +166,77 @@ export default function BeyondDeskAgents() {
 
           <p className="px-4 pt-6 text-center font-mono text-[11px] text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-6 sm:text-xs">
             <span className="text-fuchsia-300">✦</span> Three systems I actively run in parallel — each shaping how I think, build, and operate.{" "}
-            <span className="font-medium text-cyan-200">One life</span>.
+            .
           </p>
 
-          <div
-            className="mx-auto w-full max-w-3xl flex-1 px-3 pb-8 pt-6 sm:px-6 sm:pb-10 sm:pt-8"
-            role="img"
-            aria-label="Cosmic diagram: builder, learner, and home as planets with paths of light flowing into a central sun"
-          >
-            <svg
-              className="h-auto w-full drop-shadow-[0_0_40px_rgba(88,28,135,0.15)]"
-              viewBox="0 0 400 200"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* Tripundra + life status — full width; bands flex to fill column; description flows inline */}
+          <div className="mt-8 flex w-full min-h-0 flex-1 flex-col px-4 sm:px-6">
+            <p className="shrink-0 font-mono text-[11px] text-[#b4bcc8] sm:text-xs">
+              <span className="text-[#79c0ff]">$</span> life status --agents
+            </p>
+
+            <div
+              className="relative mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-sm border-2 border-white/95 bg-[#050608]/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_32px_rgba(255,255,255,0.06)] backdrop-blur-[2px]"
+              role="group"
+              aria-label="Agents"
             >
-              <defs>
-                <radialGradient id="beyondDeskPlanetBuilder" cx="32%" cy="30%" r="70%">
-                <stop offset="0%" stopColor="#93c5fd" />
-                <stop offset="40%" stopColor="#2563eb" />
-                <stop offset="78%" stopColor="#1e3a5f" />
-                <stop offset="100%" stopColor="#0c1525" />
-              </radialGradient>
-              <radialGradient id="beyondDeskPlanetLearner" cx="35%" cy="28%" r="68%">
-                <stop offset="0%" stopColor="#a5f3fc" />
-                <stop offset="38%" stopColor="#06b6d4" />
-                <stop offset="75%" stopColor="#0e7490" />
-                <stop offset="100%" stopColor="#042f2e" />
-              </radialGradient>
-              <radialGradient id="beyondDeskPlanetHome" cx="30%" cy="32%" r="72%">
-                <stop offset="0%" stopColor="#fde68a" />
-                <stop offset="35%" stopColor="#d97706" />
-                <stop offset="72%" stopColor="#78350f" />
-                <stop offset="100%" stopColor="#1c1008" />
-              </radialGradient>
+              {/* One / life — behind tripundra (same amber gradient + glow as before; layer stays back) */}
+              <div
+                className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+                aria-hidden
+              >
+                <div className="relative flex select-none flex-col items-center justify-center opacity-[0.28] sm:opacity-[0.34]">
+                  <div
+                    className="absolute h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(251,191,36,0.55)_0%,transparent_72%)] blur-2xl"
+                  />
+                  <div className="absolute top-[18%] h-20 w-px bg-gradient-to-b from-amber-200/80 via-amber-400/35 to-transparent" />
+                  <span className="relative bg-gradient-to-b from-amber-50 to-amber-300 bg-clip-text font-display text-5xl font-semibold tracking-tight text-transparent drop-shadow-[0_0_40px_rgba(251,191,36,0.55)] sm:text-6xl md:text-7xl">
+                    One
+                  </span>
+                  <span className="relative mt-0.5 font-mono text-2xl tracking-[0.4em] text-amber-100/95 drop-shadow-[0_0_24px_rgba(251,191,36,0.4)] sm:text-3xl">
+                    life
+                  </span>
+                  <span
+                    className="relative mt-3 rounded-full bg-amber-300 shadow-[0_0_14px_#fcd34d,0_0_28px_rgba(251,191,36,0.35)]"
+                    style={{ width: 7, height: 7 }}
+                  />
+                </div>
+              </div>
 
-              <radialGradient id="beyondDeskSunCore" cx="38%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#fffbeb" />
-                <stop offset="18%" stopColor="#fde047" />
-                <stop offset="45%" stopColor="#f59e0b" />
-                <stop offset="72%" stopColor="#ea580c" />
-                <stop offset="100%" stopColor="#9a3412" />
-              </radialGradient>
-              <radialGradient id="beyondDeskSunCorona" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#fcd34d" stopOpacity="0.55" />
-                <stop offset="40%" stopColor="#f97316" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="transparent" />
-              </radialGradient>
+              {agents.map((a, i) => (
+                <div key={a.id} className="relative z-10 flex min-h-0 flex-1 flex-col">
+                  <div
+                    className={`h-[3px] shrink-0 bg-white shadow-[0_0_10px_rgba(255,255,255,0.45)] ${i === 1 ? "mx-auto w-[90%]" : "w-full"}`}
+                    aria-hidden
+                  />
+                  <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center px-4 py-4 sm:px-6 sm:py-5">
+                    <p className="font-mono text-[11px] leading-relaxed text-[#cbd5e1] sm:text-xs">
+                      <span className="text-[#7ee787]">●</span>{" "}
+                      <span className="font-medium text-[#79c0ff]">{a.title}</span>{" "}
+                      <span className="text-[#8b949e]">RUNNING</span>{" "}
+                      <span className="text-[#484f58]">—</span>{" "}
+                      <span className="text-[#d2a8ff]">description:</span>{" "}
+                      <span className="font-sans text-[#e2e8f0]">{a.body}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-              <filter id="beyondDeskSoftGlow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="2.5" result="b" />
-                <feMerge>
-                  <feMergeNode in="b" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="beyondDeskSunBloom" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="6" result="b" />
-                <feMerge>
-                  <feMergeNode in="b" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            {/* Orbit trails */}
-            {PATHS.map((d, i) => (
-              <path
-                key={`base-${agents[i].id}`}
-                d={d}
-                stroke="rgba(99, 102, 241, 0.22)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-              />
-            ))}
-            {PATHS.map((d, i) => (
-              <path
-                key={`flow-${agents[i].id}`}
-                d={d}
-                stroke={agents[i].lineColor}
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                fill="none"
-                strokeDasharray="5 12"
-                className="animate-agent-dash opacity-[0.85]"
-              />
-            ))}
-
-            {/* Sun — corona then core */}
-            <circle cx="200" cy="102" r="48" fill="url(#beyondDeskSunCorona)" className="animate-hub-pulse" />
-            <circle cx="200" cy="102" r="38" fill="url(#beyondDeskSunCorona)" opacity="0.35" />
-            <circle
-              cx="200"
-              cy="102"
-              r="24"
-              fill="url(#beyondDeskSunCore)"
-              stroke="#fbbf24"
-              strokeWidth="1.2"
-              strokeOpacity="0.85"
-              filter="url(#beyondDeskSunBloom)"
-            />
-
-            {/* Planet atmospheres */}
-            <circle cx="72" cy="48" r="18" fill="#3b82f6" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
-            <circle cx="328" cy="48" r="18" fill="#22d3ee" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
-            <circle cx="200" cy="168" r="18" fill="#f59e0b" opacity="0.14" filter="url(#beyondDeskSoftGlow)" />
-
-            {/* Planets */}
-            <circle cx="72" cy="48" r="13" fill="url(#beyondDeskPlanetBuilder)" stroke="#60a5fa" strokeWidth="1.2" />
-            <circle cx="328" cy="48" r="13" fill="url(#beyondDeskPlanetLearner)" stroke="#67e8f9" strokeWidth="1.2" />
-            {/* Ring world (home) */}
-            <ellipse
-              cx="200"
-              cy="168"
-              rx="22"
-              ry="5"
-              transform="rotate(-18 200 168)"
-              stroke="#fcd34d"
-              strokeWidth="1"
-              strokeOpacity="0.55"
-              fill="none"
-            />
-            <circle cx="200" cy="168" r="13" fill="url(#beyondDeskPlanetHome)" stroke="#fbbf24" strokeWidth="1.2" />
-
-            {/* Labels */}
-            <text
-              x="72"
-              y="28"
-              textAnchor="middle"
-              fill="#bfdbfe"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 12px rgba(37,99,235,0.9)" }}
-            >
-              Builder Agent
-            </text>
-            <text
-              x="328"
-              y="28"
-              textAnchor="middle"
-              fill="#a5f3fc"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 12px rgba(6,182,212,0.85)" }}
-            >
-              Learner Agent
-            </text>
-            <text
-              x="200"
-              y="196"
-              textAnchor="middle"
-              fill="#fde68a"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 14px rgba(217,119,6,0.85)" }}
-            >
-              Home Agent
-            </text>
-
-            <text
-              x="200"
-              y="98"
-              textAnchor="middle"
-              fill="#1c1917"
-              fontSize="10"
-              fontWeight="700"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 6px rgba(255,251,235,0.95), 0 1px 0 rgba(0,0,0,0.4)" }}
-            >
-              One
-            </text>
-            <text
-              x="200"
-              y="110"
-              textAnchor="middle"
-              fill="#422006"
-              fontSize="8"
-              fontFamily="ui-monospace, monospace"
-              fontWeight="600"
-              style={{ textShadow: "0 0 4px rgba(254,243,199,0.8)" }}
-            >
-              life
-            </text>
-          </svg>
+            <p className="mt-6 w-full shrink-0 border-t-2 border-white/30 pt-4 text-center font-mono text-[11px] text-[#8b949e] sm:text-xs">
+              <span className="text-[#ffa657]">merge</span>
+              <span className="text-[#c9d1d9]">(</span>
+              <span className="text-[#79c0ff]">builder</span>
+              <span className="text-[#c9d1d9]">, </span>
+              <span className="text-[#79c0ff]">learner</span>
+              <span className="text-[#c9d1d9]">, </span>
+              <span className="text-[#79c0ff]">home</span>
+              <span className="text-[#c9d1d9]">)</span>
+              <span className="text-[#8b949e]"> → </span>
+              <span className="text-[#7ee787]">one day, one life</span>
+            </p>
           </div>
         </div>
-      </div>
-
-      {/* Terminal — tripundra-style three white lines (vibhuti) over each agent band */}
-      <div className="border-b border-[#30363d] bg-[#07080c] px-4 py-4 font-mono text-[11px] leading-relaxed text-[#c9d1d9] sm:px-5 sm:text-xs">
-        <p className="text-[#8b949e]">
-          <span className="text-[#79c0ff]">$</span> life status --agents
-        </p>
-
-        <div
-          className="mt-4 overflow-hidden rounded-sm border-2 border-white/95 bg-[#050608] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_24px_rgba(255,255,255,0.04)]"
-          role="group"
-          aria-label="agents"
-        >
-          {agents.map((a, i) => (
-            <div key={a.id}>
-              {/* Tripundra: three parallel lines; middle band often drawn slightly shorter */}
-              <div
-                className={`h-[3px] bg-white shadow-[0_0_8px_rgba(255,255,255,0.35)] ${i === 1 ? "mx-auto w-[90%]" : "w-full"}`}
-                aria-hidden
-              />
-              <div className="px-3 py-3.5 sm:px-4 sm:py-4">
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="text-[#7ee787]">●</span>
-                  <span className="font-medium text-[#79c0ff]">{a.title}</span>
-                  <span className="text-[#8b949e]">RUNNING</span>
-                  <span className="text-[#484f58]">—</span>
-                  <span className="text-[#d2a8ff]">description:</span>
-                </div>
-                <div className="mt-2 font-sans text-[11px] leading-relaxed text-[#cbd5e1] sm:text-xs">{a.body}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-4 border-t-2 border-white/25 pt-3 text-[#8b949e]">
-          <span className="text-[#ffa657]">merge</span>
-          <span className="text-[#c9d1d9]">(</span>
-          <span className="text-[#79c0ff]">builder</span>
-          <span className="text-[#c9d1d9]">, </span>
-          <span className="text-[#79c0ff]">learner</span>
-          <span className="text-[#c9d1d9]">, </span>
-          <span className="text-[#79c0ff]">home</span>
-          <span className="text-[#c9d1d9]">)</span>
-          <span className="text-[#8b949e]"> → </span>
-          <span className="text-[#7ee787]">one day, one life</span>
-        </p>
       </div>
 
       {/* Cards — supporting detail; smaller imagery so diagram stays hero */}
