@@ -1,17 +1,15 @@
-import Image from "next/image";
-
 const agents = [
   {
     id: "builder-agent",
     title: "Hands-on builder",
     borderClass: "border-l-blue-500/70",
     dotClass: "bg-blue-400",
-    lineColor: "#58a6ff",
+    dotColor: "#60a5fa",
     src: "/images/sections/section-life-builder.png",
-    alt: "Placeholder art: coding and building (replace with your photo)",
+    alt: "Venkatesh TV writing code",
     body: (
       <>
-        I still <span className="text-slate-200">write code</span> — it keeps me honest about what we ask teams to ship.
+        I still <span className="text-white">write code</span> — it keeps me honest about what we ask teams to ship.
       </>
     ),
   },
@@ -20,13 +18,12 @@ const agents = [
     title: "Always learning",
     borderClass: "border-l-cyan-500/70",
     dotClass: "bg-cyan-400",
-    lineColor: "#22d3ee",
+    dotColor: "#22d3ee",
     src: "/images/sections/section-life-learning.png",
-    alt: "Placeholder art: reading and research (replace with your photo)",
+    alt: "Venkatesh TV reading and researching",
     body: (
       <>
-        I read <span className="text-slate-200">tech articles and papers</span> constantly — AI moves fast; curiosity is
-        a habit.
+        I read <span className="text-white">books and articles</span> to stay sharp — Business, Tech, AI. If it&apos;s moving fast, I want to understand it first.
       </>
     ),
   },
@@ -35,41 +32,24 @@ const agents = [
     title: "Family & a beagle",
     borderClass: "border-l-amber-500/70",
     dotClass: "bg-amber-400",
-    lineColor: "#fbbf24",
+    dotColor: "#fbbf24",
     src: "/images/sections/section-life-family.png",
-    alt: "Placeholder art: family and dog (replace with your photo)",
+    alt: "Venkatesh TV with family",
     body: (
       <>
-        Away from work, I&apos;m with <span className="text-slate-200">family</span> — and our beagle, who has strong
-        opinions about walk times and treats.
+        Away from work, I&apos;m with <span className="text-white">family</span> — and our beagle, who has strong opinions about walk times and treats.
       </>
     ),
   },
 ];
 
-/** Hub-and-spoke paths: builder (TL), learner (TR), home (B) → center merge */
-const PATHS = [
-  "M 72 48 Q 130 78 200 102",
-  "M 328 48 Q 270 78 200 102",
-  "M 200 168 Q 200 138 200 102",
-];
-
 const COSMIC_W = 1000;
 const COSMIC_H = 620;
 
-/** Dense, colorful starfield — full-bleed cosmic canvas */
 const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }[] = (() => {
   const palette = [
-    "#ffffff",
-    "#fef08a",
-    "#fde047",
-    "#a5f3fc",
-    "#fda4af",
-    "#e9d5ff",
-    "#bbf7d0",
-    "#fcd34d",
-    "#f0abfc",
-    "#7dd3fc",
+    "#ffffff", "#fef08a", "#fde047", "#a5f3fc",
+    "#fda4af", "#e9d5ff", "#bbf7d0", "#fcd34d", "#f0abfc", "#7dd3fc",
   ];
   let s = 314159;
   const out: { x: number; y: number; r: number; o: number; fill: string }[] = [];
@@ -91,9 +71,9 @@ const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }
 export default function BeyondDeskAgents() {
   return (
     <div className="overflow-hidden rounded-2xl border border-[#3c3c3c] bg-[#0d1117] shadow-[0_32px_80px_-28px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04]">
-      {/* Full cosmic canvas: title bar + copy + diagram — ends above terminal */}
-      <div className="relative min-h-[420px] sm:min-h-[520px]">
-        {/* Full-bleed colorful space + stars */}
+      <div className="relative flex min-h-[520px] flex-col sm:min-h-[600px]">
+
+        {/* Cosmic background */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <svg
             className="h-full w-full"
@@ -145,7 +125,6 @@ export default function BeyondDeskAgents() {
               <circle key={`cosmic-star-${i}`} cx={star.x} cy={star.y} r={star.r} fill={star.fill} opacity={star.o} />
             ))}
           </svg>
-          {/* Extra vivid color wash (CSS) for depth */}
           <div
             className="absolute inset-0 mix-blend-screen opacity-40"
             style={{
@@ -153,21 +132,21 @@ export default function BeyondDeskAgents() {
                 "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(236,72,153,0.45), transparent 50%), radial-gradient(ellipse 70% 45% at 85% 25%, rgba(56,189,248,0.5), transparent 55%), radial-gradient(ellipse 60% 40% at 50% 90%, rgba(251,191,36,0.4), transparent 50%)",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-transparent to-[#0f0a1a]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/95 via-[#020617]/30 to-[#0f0a1a]/50" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100%] flex-col border-b border-white/10">
-          {/* Title bar — glass on cosmic */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/25 px-4 py-2.5 backdrop-blur-md">
-            <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#e2e8f0] sm:text-xs">
-              <span className="truncate text-[#7dd3fc] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">life-orchestrator</span>
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+          {/* Title bar */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/30 px-5 py-3 backdrop-blur-md">
+            <div className="flex min-w-0 items-center gap-2.5 font-mono text-xs text-[#e2e8f0]">
+              <span className="truncate font-semibold text-[#7dd3fc] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">life-orchestrator</span>
               <span className="text-[#94a3b8]">·</span>
-              <span className="hidden sm:inline text-cyan-300/90">multi-agent</span>
-              <span className="rounded border border-[#38bdf8]/30 bg-[#0f172a]/60 px-1.5 py-0.5 text-[10px] text-[#fef08a]">
+              <span className="hidden text-cyan-300/90 sm:inline">multi-agent</span>
+              <span className="rounded border border-[#38bdf8]/30 bg-[#0f172a]/60 px-2 py-0.5 text-[11px] text-[#fef08a]">
                 3 agents
               </span>
             </div>
-            <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#4ade80]">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#4ade80]">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-50" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80]" />
@@ -176,274 +155,83 @@ export default function BeyondDeskAgents() {
             </div>
           </div>
 
-          <p className="px-4 pt-6 text-center font-mono text-[11px] text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-6 sm:text-xs">
-            <span className="text-fuchsia-300">✦</span> Three systems I actively run in parallel — each shaping how I think, build, and operate.{" "}
-            <span className="font-medium text-cyan-200">One life</span>.
+          {/* Tagline */}
+          <p className="px-5 pt-7 text-center font-mono text-sm text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-8">
+            <span className="text-fuchsia-300">✦</span>{" "}
+            Three systems I actively run in parallel — each shaping how I think, build, and operate.
           </p>
 
-          <div
-            className="mx-auto w-full max-w-3xl flex-1 px-3 pb-8 pt-6 sm:px-6 sm:pb-10 sm:pt-8"
-            role="img"
-            aria-label="Cosmic diagram: builder, learner, and home as planets with paths of light flowing into a central sun"
-          >
-            <svg
-              className="h-auto w-full drop-shadow-[0_0_40px_rgba(88,28,135,0.15)]"
-              viewBox="0 0 400 200"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* Agent list */}
+          <div className="mt-7 flex w-full min-h-0 flex-1 flex-col px-5 pb-8 sm:px-8">
+            <p className="shrink-0 font-mono text-sm text-[#b4bcc8]">
+              <span className="text-[#79c0ff]">$</span> life status --agents
+            </p>
+
+            <div
+              className="relative mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-white/20 bg-[#050608]/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm"
+              role="group"
+              aria-label="Life agents"
             >
-              <defs>
-                <radialGradient id="beyondDeskPlanetBuilder" cx="32%" cy="30%" r="70%">
-                <stop offset="0%" stopColor="#93c5fd" />
-                <stop offset="40%" stopColor="#2563eb" />
-                <stop offset="78%" stopColor="#1e3a5f" />
-                <stop offset="100%" stopColor="#0c1525" />
-              </radialGradient>
-              <radialGradient id="beyondDeskPlanetLearner" cx="35%" cy="28%" r="68%">
-                <stop offset="0%" stopColor="#a5f3fc" />
-                <stop offset="38%" stopColor="#06b6d4" />
-                <stop offset="75%" stopColor="#0e7490" />
-                <stop offset="100%" stopColor="#042f2e" />
-              </radialGradient>
-              <radialGradient id="beyondDeskPlanetHome" cx="30%" cy="32%" r="72%">
-                <stop offset="0%" stopColor="#fde68a" />
-                <stop offset="35%" stopColor="#d97706" />
-                <stop offset="72%" stopColor="#78350f" />
-                <stop offset="100%" stopColor="#1c1008" />
-              </radialGradient>
+              {/* "One life" watermark */}
+              <div
+                className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+                aria-hidden
+              >
+                <div className="relative flex select-none flex-col items-center justify-center opacity-[0.22]">
+                  <div className="absolute h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(251,191,36,0.55)_0%,transparent_72%)] blur-2xl" />
+                  <span className="relative bg-gradient-to-b from-amber-50 to-amber-300 bg-clip-text font-display text-6xl font-semibold tracking-tight text-transparent drop-shadow-[0_0_40px_rgba(251,191,36,0.55)] sm:text-7xl">
+                    One
+                  </span>
+                  <span className="relative mt-1 font-mono text-2xl tracking-[0.4em] text-amber-100/95 sm:text-3xl">
+                    life
+                  </span>
+                </div>
+              </div>
 
-              <radialGradient id="beyondDeskSunCore" cx="38%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#fffbeb" />
-                <stop offset="18%" stopColor="#fde047" />
-                <stop offset="45%" stopColor="#f59e0b" />
-                <stop offset="72%" stopColor="#ea580c" />
-                <stop offset="100%" stopColor="#9a3412" />
-              </radialGradient>
-              <radialGradient id="beyondDeskSunCorona" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#fcd34d" stopOpacity="0.55" />
-                <stop offset="40%" stopColor="#f97316" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="transparent" />
-              </radialGradient>
+              {agents.map((a, i) => (
+                <div key={a.id} className="relative z-10 flex min-h-0 flex-1 flex-col">
+                  <div
+                    className={`h-px shrink-0 bg-white/20 ${i === 0 ? "hidden" : ""}`}
+                    aria-hidden
+                  />
+                  <div className="flex min-h-0 flex-1 flex-col justify-center gap-2 px-5 py-5 sm:px-6 sm:py-6">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full"
+                        style={{ background: a.dotColor, boxShadow: `0 0 8px ${a.dotColor}` }}
+                        aria-hidden
+                      />
+                      <span className="font-mono text-xs font-semibold uppercase tracking-widest text-slate-400">
+                        {a.id}
+                      </span>
+                      <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-400">
+                        RUNNING
+                      </span>
+                    </div>
+                    <div className="pl-[18px]">
+                      <p className="font-display text-lg font-medium text-white sm:text-xl">{a.title}</p>
+                      <p className="mt-1 font-sans text-sm leading-relaxed text-slate-300 sm:text-base">{a.body}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-              <filter id="beyondDeskSoftGlow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="2.5" result="b" />
-                <feMerge>
-                  <feMergeNode in="b" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="beyondDeskSunBloom" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="6" result="b" />
-                <feMerge>
-                  <feMergeNode in="b" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            {/* Orbit trails */}
-            {PATHS.map((d, i) => (
-              <path
-                key={`base-${agents[i].id}`}
-                d={d}
-                stroke="rgba(99, 102, 241, 0.22)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-              />
-            ))}
-            {PATHS.map((d, i) => (
-              <path
-                key={`flow-${agents[i].id}`}
-                d={d}
-                stroke={agents[i].lineColor}
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                fill="none"
-                strokeDasharray="5 12"
-                className="animate-agent-dash opacity-[0.85]"
-              />
-            ))}
-
-            {/* Sun — corona then core */}
-            <circle cx="200" cy="102" r="48" fill="url(#beyondDeskSunCorona)" className="animate-hub-pulse" />
-            <circle cx="200" cy="102" r="38" fill="url(#beyondDeskSunCorona)" opacity="0.35" />
-            <circle
-              cx="200"
-              cy="102"
-              r="24"
-              fill="url(#beyondDeskSunCore)"
-              stroke="#fbbf24"
-              strokeWidth="1.2"
-              strokeOpacity="0.85"
-              filter="url(#beyondDeskSunBloom)"
-            />
-
-            {/* Planet atmospheres */}
-            <circle cx="72" cy="48" r="18" fill="#3b82f6" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
-            <circle cx="328" cy="48" r="18" fill="#22d3ee" opacity="0.12" filter="url(#beyondDeskSoftGlow)" />
-            <circle cx="200" cy="168" r="18" fill="#f59e0b" opacity="0.14" filter="url(#beyondDeskSoftGlow)" />
-
-            {/* Planets */}
-            <circle cx="72" cy="48" r="13" fill="url(#beyondDeskPlanetBuilder)" stroke="#60a5fa" strokeWidth="1.2" />
-            <circle cx="328" cy="48" r="13" fill="url(#beyondDeskPlanetLearner)" stroke="#67e8f9" strokeWidth="1.2" />
-            {/* Ring world (home) */}
-            <ellipse
-              cx="200"
-              cy="168"
-              rx="22"
-              ry="5"
-              transform="rotate(-18 200 168)"
-              stroke="#fcd34d"
-              strokeWidth="1"
-              strokeOpacity="0.55"
-              fill="none"
-            />
-            <circle cx="200" cy="168" r="13" fill="url(#beyondDeskPlanetHome)" stroke="#fbbf24" strokeWidth="1.2" />
-
-            {/* Labels */}
-            <text
-              x="72"
-              y="28"
-              textAnchor="middle"
-              fill="#bfdbfe"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 12px rgba(37,99,235,0.9)" }}
-            >
-              Builder Agent
-            </text>
-            <text
-              x="328"
-              y="28"
-              textAnchor="middle"
-              fill="#a5f3fc"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 12px rgba(6,182,212,0.85)" }}
-            >
-              Learner Agent
-            </text>
-            <text
-              x="200"
-              y="196"
-              textAnchor="middle"
-              fill="#fde68a"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 14px rgba(217,119,6,0.85)" }}
-            >
-              Home Agent
-            </text>
-
-            <text
-              x="200"
-              y="98"
-              textAnchor="middle"
-              fill="#1c1917"
-              fontSize="10"
-              fontWeight="700"
-              fontFamily="ui-monospace, monospace"
-              style={{ textShadow: "0 0 6px rgba(255,251,235,0.95), 0 1px 0 rgba(0,0,0,0.4)" }}
-            >
-              One
-            </text>
-            <text
-              x="200"
-              y="110"
-              textAnchor="middle"
-              fill="#422006"
-              fontSize="8"
-              fontFamily="ui-monospace, monospace"
-              fontWeight="600"
-              style={{ textShadow: "0 0 4px rgba(254,243,199,0.8)" }}
-            >
-              life
-            </text>
-          </svg>
+            <p className="mt-5 w-full shrink-0 border-t border-white/15 pt-4 text-center font-mono text-sm text-[#8b949e]">
+              <span className="text-[#ffa657]">merge</span>
+              <span className="text-[#c9d1d9]">(</span>
+              <span className="text-[#79c0ff]">builder</span>
+              <span className="text-[#c9d1d9]">, </span>
+              <span className="text-[#79c0ff]">learner</span>
+              <span className="text-[#c9d1d9]">, </span>
+              <span className="text-[#79c0ff]">home</span>
+              <span className="text-[#c9d1d9]">)</span>
+              <span className="text-[#8b949e]"> → </span>
+              <span className="text-[#7ee787]">one day, one life</span>
+            </p>
           </div>
         </div>
       </div>
-
-      {/* Terminal — tripundra-style three white lines (vibhuti) over each agent band */}
-      <div className="border-b border-[#30363d] bg-[#07080c] px-4 py-4 font-mono text-[11px] leading-relaxed text-[#c9d1d9] sm:px-5 sm:text-xs">
-        <p className="text-[#8b949e]">
-          <span className="text-[#79c0ff]">$</span> life status --agents
-        </p>
-
-        <div
-          className="mt-4 overflow-hidden rounded-sm border-2 border-white/95 bg-[#050608] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_24px_rgba(255,255,255,0.04)]"
-          role="group"
-          aria-label="agents"
-        >
-          {agents.map((a, i) => (
-            <div key={a.id}>
-              {/* Tripundra: three parallel lines; middle band often drawn slightly shorter */}
-              <div
-                className={`h-[3px] bg-white shadow-[0_0_8px_rgba(255,255,255,0.35)] ${i === 1 ? "mx-auto w-[90%]" : "w-full"}`}
-                aria-hidden
-              />
-              <div className="px-3 py-3.5 sm:px-4 sm:py-4">
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="text-[#7ee787]">●</span>
-                  <span className="font-medium text-[#79c0ff]">{a.title}</span>
-                  <span className="text-[#8b949e]">RUNNING</span>
-                  <span className="text-[#484f58]">—</span>
-                  <span className="text-[#d2a8ff]">description:</span>
-                </div>
-                <div className="mt-2 font-sans text-[11px] leading-relaxed text-[#cbd5e1] sm:text-xs">{a.body}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-4 border-t-2 border-white/25 pt-3 text-[#8b949e]">
-          <span className="text-[#ffa657]">merge</span>
-          <span className="text-[#c9d1d9]">(</span>
-          <span className="text-[#79c0ff]">builder</span>
-          <span className="text-[#c9d1d9]">, </span>
-          <span className="text-[#79c0ff]">learner</span>
-          <span className="text-[#c9d1d9]">, </span>
-          <span className="text-[#79c0ff]">home</span>
-          <span className="text-[#c9d1d9]">)</span>
-          <span className="text-[#8b949e]"> → </span>
-          <span className="text-[#7ee787]">one day, one life</span>
-        </p>
-      </div>
-
-      {/* Cards — supporting detail; smaller imagery so diagram stays hero */}
-      {/* <div className="grid gap-0 border-t border-[#30363d] bg-[#0a0d12] sm:grid-cols-2 lg:grid-cols-3">
-        {agents.map((a, i) => (
-          <article
-            key={a.id}
-            className={`group relative border-b border-[#30363d] bg-gradient-to-b from-white/[0.04] to-transparent transition-colors hover:bg-white/[0.03] sm:border-b-0 lg:border-r lg:border-[#30363d] lg:last:border-r-0 ${a.borderClass} border-l-4`}
-          >
-            <div className="flex items-center justify-between border-b border-white/[0.06] bg-black/25 px-3 py-2 font-mono text-[10px] text-slate-400 sm:px-4 sm:text-[11px]">
-              <span className="truncate text-slate-300">{a.id}</span>
-              <span className="flex shrink-0 items-center gap-1.5">
-                <span className="text-[#8b949e]">↔</span>
-                <span className={`h-1.5 w-1.5 rounded-full ${a.dotClass}`} aria-hidden />
-                <span className="text-emerald-400/90">sync</span>
-              </span>
-            </div>
-            <div className="relative aspect-[2/1] w-full overflow-hidden sm:aspect-[16/10]">
-              <Image
-                src={a.src}
-                alt={a.alt}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                priority={i === 0}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent" />
-            </div>
-            <div className="p-4 sm:p-5">
-              <h3 className="font-display text-base font-medium tracking-[-0.02em] text-white sm:text-lg">{a.title}</h3>
-              <div className="mt-2 font-sans text-xs leading-relaxed text-slate-400 sm:text-sm">{a.body}</div>
-            </div>
-          </article>
-        ))}
-      </div> */}
     </div>
   );
 }

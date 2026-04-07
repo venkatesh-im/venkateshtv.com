@@ -36,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
     }
 
     const body = await request.json();
-    const { title, slug, excerpt, content, published } = body;
+    const { title, slug, excerpt, coverImage, content, published } = body;
 
     if (!title || typeof title !== "string") {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
@@ -79,6 +79,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
         title: title.trim(),
         slug: slug.trim(),
         excerpt: excerpt?.trim() || null,
+        coverImage: coverImage || null,
         content,
         published: !!published,
       },

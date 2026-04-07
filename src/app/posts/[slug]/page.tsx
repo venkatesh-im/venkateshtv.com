@@ -1,12 +1,34 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import sanitizeHtml from "sanitize-html";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import CopyLinkButton from "@/components/blog/CopyLinkButton";
 import { prisma } from "@/lib/prisma";
 import { formatDate, readingTime, truncate, stripHtml } from "@/lib/utils";
+
+const ALLOWED_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: [
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "p", "br", "strong", "em", "u", "s", "mark",
+    "ul", "ol", "li", "blockquote", "pre", "code",
+    "a", "img", "hr",
+  ],
+  allowedAttributes: {
+    a: ["href", "target", "rel"],
+    img: ["src", "alt", "class", "width", "height"],
+    code: ["class"],
+    pre: ["class"],
+    p: ["style"],
+    h1: ["style"], h2: ["style"], h3: ["style"],
+  },
+  allowedSchemes: ["https", "http", "mailto"],
+  allowedSchemesByTag: {
+    img: ["https", "http"],
+  },
+};
 
 interface Props {
   params: { slug: string };
@@ -171,9 +193,19 @@ export default async function PostPage({ params }: Props) {
               </div>
             </header>
 
+            {post.coverImage && (
+              <div className="mb-12 overflow-hidden rounded-2xl border border-white/[0.08] shadow-[0_32px_80px_-24px_rgba(0,0,0,0.6)]">
+                <img
+                  src={post.coverImage}
+                  alt={post.title}
+                  className="w-full object-cover max-h-[520px]"
+                />
+              </div>
+            )}
+
             <div
               className="prose-content prose-editorial"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content, ALLOWED_SANITIZE_OPTIONS) }}
             />
 
             <div className="mt-20 border-t border-white/[0.06] pt-10">
