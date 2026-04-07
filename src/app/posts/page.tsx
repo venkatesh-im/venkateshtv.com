@@ -8,6 +8,32 @@ export const metadata: Metadata = {
   title: "Writing",
   description:
     "Essays on AI, engineering, and leadership — by Venkatesh TV, two-time CTO and CEO of Impelox (60+ people).",
+  alternates: {
+    canonical: "https://www.venkateshtv.com/posts",
+  },
+  openGraph: {
+    title: "Writing | Venkatesh TV",
+    description:
+      "Essays on AI, engineering, and leadership — by Venkatesh TV, two-time CTO and CEO of Impelox (60+ people).",
+    type: "website",
+    url: "https://www.venkateshtv.com/posts",
+    siteName: "Venkatesh TV",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Writing | Venkatesh TV",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Writing | Venkatesh TV",
+    description:
+      "Essays on AI, engineering, and leadership — by Venkatesh TV, two-time CTO and CEO of Impelox.",
+    images: ["/opengraph-image"],
+  },
 };
 
 async function getAllPosts() {
