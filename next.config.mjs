@@ -2,7 +2,9 @@
 const nextConfig = {
   output: "standalone",
   // Move Prisma outside the Next.js bundler to prevent issues with native binaries
-  serverExternalPackages: ["@prisma/client", "prisma"],
+  experimental: {
+    serverComponentsExternalPackages: ["@prisma/client", "prisma"],
+  },
   images: {
     domains: [],
   },
