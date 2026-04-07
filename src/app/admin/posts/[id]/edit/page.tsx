@@ -50,6 +50,7 @@ export default async function EditPostPage({ params }: Props) {
           title: post.title,
           slug: post.slug,
           excerpt: post.excerpt || "",
+          coverImage: post.coverImage || "",
           content: post.content,
           published: post.published,
         }}
