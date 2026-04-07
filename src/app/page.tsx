@@ -86,6 +86,33 @@ export default async function HomePage() {
                     </svg>
                   </Link>
                 </div>
+
+                {/* Stats — visible above the fold */}
+                <div className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/[0.08] pt-8">
+                  {[
+                    { value: "2×", label: "CTO" },
+                    { value: "60+", label: "People Led" },
+                    { value: "5+", label: "Years Building" },
+                    { value: "20+", label: "Years of Exp" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="flex flex-col gap-0.5">
+                      <span
+                        className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
+                        style={{
+                          background: "linear-gradient(135deg, #60a5fa, #38bdf8)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                      >
+                        {stat.value}
+                      </span>
+                      <span className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        {stat.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Right — photo with floating badges */}
@@ -141,42 +168,43 @@ export default async function HomePage() {
             </div>
           </div>
 
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3">
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
+              Scroll to explore
+            </span>
+            <div
+              className="flex h-10 w-6 items-start justify-center rounded-full p-1.5"
+              style={{
+                border: "1px solid rgba(96,165,250,0.35)",
+                background: "rgba(37,99,235,0.08)",
+                boxShadow: "0 0 16px rgba(37,99,235,0.2)",
+              }}
+            >
+              <div
+                className="w-1 rounded-full bg-blue-400"
+                style={{
+                  height: "6px",
+                  animation: "scrollDot 1.6s ease-in-out infinite",
+                  boxShadow: "0 0 6px rgba(96,165,250,0.8)",
+                }}
+              />
+            </div>
+            <style>{`
+              @keyframes scrollDot {
+                0%   { transform: translateY(0);   opacity: 1; }
+                60%  { transform: translateY(10px); opacity: 0.2; }
+                100% { transform: translateY(0);   opacity: 1; }
+              }
+            `}</style>
+          </div>
+
           <div
             className="pointer-events-none absolute bottom-0 left-0 right-0 h-28"
             style={{ background: "linear-gradient(to bottom, transparent, #020617)" }}
           />
         </section>
 
-        {/* ── Stats bar ─────────────────────────────────────────── */}
-        <section className="border-y border-white/[0.06] py-10">
-          <div className="container-wide">
-            <div className="flex flex-wrap items-center justify-center divide-y divide-white/[0.06] sm:divide-y-0 sm:divide-x sm:divide-white/[0.08]">
-              {[
-                { value: "2×", label: "CTO" },
-                { value: "60+", label: "People Led" },
-                { value: "5+", label: "Years Building" },
-                { value: "20+", label: "Years of Exp" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex w-full flex-col items-center gap-1 px-10 py-4 text-center sm:w-auto sm:py-0">
-                  <span
-                    className="font-display text-4xl font-semibold tracking-tight sm:text-5xl"
-                    style={{
-                      background: "linear-gradient(135deg, #60a5fa, #38bdf8, #22d3ee)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── Who I Am ─────────────────────────────────────────── */}
         <section className="relative py-20 sm:py-28">
@@ -321,10 +349,10 @@ export default async function HomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-white">Agent Frameworks</h3>
+                  <h3 className="font-display text-lg font-semibold text-white">Get your own Agents</h3>
                 </div>
                 <p className="mb-5 font-sans text-sm leading-relaxed text-slate-400">
-                  Build and deploy agents across all major frameworks and inference models — including self-hosted private models.
+                  Custom AI agents that work 24/7 — handling leads, support, follow-ups, and operations so your team doesn&apos;t have to.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Next Action AI", "OpenClaw", "ADK", "AG2", "LangGraph", "Claude", "GPT", "Gemini", "Ollama"].map((t) => (
@@ -344,10 +372,10 @@ export default async function HomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-white">Workflow Automation</h3>
+                  <h3 className="font-display text-lg font-semibold text-white">Automate Repeated Tasks</h3>
                 </div>
                 <p className="mb-5 font-sans text-sm leading-relaxed text-slate-400">
-                  Automate end-to-end workflows using Impelox&apos;s agentic platform or no-code/low-code tools — whatever fits the team.
+                  Stop doing the same thing twice. Automate your repetitive workflows end-to-end — saving time, reducing errors, and freeing your team for what matters.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Impelox Platform", "n8n", "Make.com", "GHL", "Zapier"].map((t) => (
@@ -486,14 +514,12 @@ export default async function HomePage() {
 
             <p className="mt-10 text-center font-sans text-sm text-slate-500 sm:text-left">
               If one of these resonates,{" "}
-              <a
-                href="https://www.linkedin.com/in/venkateshtv/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/contact"
                 className="text-blue-400 transition-colors hover:text-blue-300"
               >
-                reach out on LinkedIn
-              </a>
+                reach out
+              </Link>
               . I read every message.
             </p>
           </div>

@@ -1,5 +1,5 @@
 /**
- * VS Code / Cursor–style mock: editor + terminal — "developer at heart" for the value prop section.
+ * VS Code / Cursor–style mock: editor + terminal — value prop section.
  */
 export default function ConversationsIDE() {
   return (
@@ -51,7 +51,7 @@ export default function ConversationsIDE() {
               <svg className="h-3.5 w-3.5 shrink-0 text-[#519aba]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
               </svg>
-              conversations.md
+              conversations.js
               <span className="opacity-40">×</span>
             </div>
             <div className="px-3 py-2 font-mono text-xs text-[#858585] opacity-70">terminal</div>
@@ -61,27 +61,45 @@ export default function ConversationsIDE() {
           <div className="min-h-[140px] flex-1 overflow-x-auto border-b border-[#3c3c3c] bg-[#1e1e1e] p-5 lg:min-h-0">
             <div className="flex gap-4 font-mono text-sm leading-7">
               <div className="select-none text-right tabular-nums text-[#4a4a4a]" aria-hidden>
-                {Array.from({ length: 7 }, (_, i) => (
+                {Array.from({ length: 10 }, (_, i) => (
                   <div key={i}>{i + 1}</div>
                 ))}
               </div>
               <div className="min-w-0">
-                <p className="text-[#6a9955]">{"// Where I add value — three conversations that matter"}</p>
-                <p className="mt-1 text-[#4ec9b0]">{"## Conversations that matter"}</p>
-                <p className="mt-3 text-[#6a9955]">{"/* Three places founders feel friction first */"}</p>
+                <p className="text-[#6a9955]">{"// Conversations that matter — Where I add value"}</p>
+                <p className="mt-1 text-[#6a9955]">{"// Have an idea or a problem?"}</p>
+                <p className="text-[#6a9955]">{"// Already tried Claude, OpenAI, or n8n?"}</p>
                 <p className="mt-2">
-                  <span className="text-[#c586c0]">const</span>{" "}
-                  <span className="text-[#9cdcfe]">topics</span>
-                  <span className="text-[#d4d4d4]">: ValueProp[] = [</span>
+                  <span className="text-[#c586c0]">if</span>
+                  <span className="text-[#d4d4d4]"> (you.</span>
+                  <span className="text-[#dcdcaa]">have</span>
+                  <span className="text-[#d4d4d4]">(</span>
+                  <span className="text-[#ce9178]">&quot;idea&quot;</span>
+                  <span className="text-[#d4d4d4]"> || </span>
+                  <span className="text-[#ce9178]">&quot;problem&quot;</span>
+                  <span className="text-[#d4d4d4]">)) {"{"}</span>
                 </p>
                 <p className="pl-6">
-                  <span className="text-[#ce9178]">&quot;growth&quot;</span>
+                  <span className="text-[#c586c0]">if</span>
+                  <span className="text-[#d4d4d4]"> (you.</span>
+                  <span className="text-[#dcdcaa]">tried</span>
+                  <span className="text-[#d4d4d4]">(</span>
+                  <span className="text-[#ce9178]">&quot;Claude&quot;</span>
                   <span className="text-[#d4d4d4]">, </span>
-                  <span className="text-[#ce9178]">&quot;tech-leadership&quot;</span>
+                  <span className="text-[#ce9178]">&quot;OpenAI&quot;</span>
                   <span className="text-[#d4d4d4]">, </span>
-                  <span className="text-[#ce9178]">&quot;first-time-founder&quot;</span>
+                  <span className="text-[#ce9178]">&quot;n8n&quot;</span>
+                  <span className="text-[#d4d4d4]">)) {"{"}</span>
                 </p>
-                <p className="text-[#d4d4d4]">];</p>
+                <p className="pl-12 text-[#6a9955]">{"// You're in the right place"}</p>
+                <p className="pl-12">
+                  <span className="text-[#dcdcaa]">run</span>
+                  <span className="text-[#d4d4d4]">(</span>
+                  <span className="text-[#ce9178]">&quot;where-i-add-value.sh&quot;</span>
+                  <span className="text-[#d4d4d4]">);</span>
+                </p>
+                <p className="pl-6 text-[#d4d4d4]">{"}"}</p>
+                <p className="text-[#d4d4d4]">{"}"}</p>
               </div>
             </div>
           </div>
@@ -102,29 +120,26 @@ export default function ConversationsIDE() {
                 <span className="text-[#4ec9b0]">~/values</span>{" "}
                 <span className="text-[#dcdcaa]">git:(main)</span>{" "}
                 <span className="text-[#858585]">$</span>{" "}
-                <span className="text-[#d4d4d4]">./print-conversations.sh</span>
+                <span className="text-[#d4d4d4]">./where-i-add-value.sh</span>
               </p>
 
               <div className="mt-5 space-y-6 border-l-2 border-[#264f78] pl-4">
                 <div>
-                  <p className="text-base font-semibold text-[#4fc1ff]">when-growth-breaks.md</p>
+                  <p className="text-base font-semibold text-[#4fc1ff]">when-you-need-production.md</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-[#d4d4d4]">
-                    Leads slip through, costs rise, and adding people doesn&apos;t fix it. I build AI agents that take over
-                    real customer workflows — not just assist.
+                    You have something working but it&apos;s not production-ready. I help you get there — with the right scale, security, and reliability built in from the start.
                   </p>
                 </div>
                 <div>
-                  <p className="text-base font-semibold text-[#4fc1ff]">when-tech-slows.md</p>
+                  <p className="text-base font-semibold text-[#4fc1ff]">when-fixing-costs-more-than-selling.md</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-[#d4d4d4]">
-                    Architecture, AI direction, execution — things feel unclear or fragmented. I step in to bring clarity,
-                    make decisions faster, and ship.
+                    When your team spends more time fixing things than building or selling, something is broken. I step in to cut the noise and restore velocity.
                   </p>
                 </div>
                 <div>
-                  <p className="text-base font-semibold text-[#4fc1ff]">when-you&apos;re-figuring-it-out.md</p>
+                  <p className="text-base font-semibold text-[#4fc1ff]">when-you-need-quick-ai.md</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-[#d4d4d4]">
-                    First time building something real? I&apos;ve made the mistakes — on hiring, tech bets, and product direction.
-                    Happy to share what I wish someone had told me earlier.
+                    Need to add an AI feature fast? I help you go from idea to working implementation quickly — without over-engineering it.
                   </p>
                 </div>
               </div>
