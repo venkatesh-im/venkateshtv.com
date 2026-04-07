@@ -4,11 +4,12 @@ const agents = [
     title: "Hands-on builder",
     borderClass: "border-l-blue-500/70",
     dotClass: "bg-blue-400",
+    dotColor: "#60a5fa",
     src: "/images/sections/section-life-builder.png",
-    alt: "Placeholder art: coding and building (replace with your photo)",
+    alt: "Venkatesh TV writing code",
     body: (
       <>
-        I still <span className="text-slate-200">write code</span> — it keeps me honest about what we ask teams to ship.
+        I still <span className="text-white">write code</span> — it keeps me honest about what we ask teams to ship.
       </>
     ),
   },
@@ -17,12 +18,12 @@ const agents = [
     title: "Always learning",
     borderClass: "border-l-cyan-500/70",
     dotClass: "bg-cyan-400",
+    dotColor: "#22d3ee",
     src: "/images/sections/section-life-learning.png",
-    alt: "Placeholder art: reading and research (replace with your photo)",
+    alt: "Venkatesh TV reading and researching",
     body: (
       <>
-        I read <span className="text-slate-200">tech articles and papers</span> constantly — AI moves fast; curiosity is
-        a habit.
+        I read <span className="text-white">books and articles</span> to stay sharp — Business, Tech, AI. If it&apos;s moving fast, I want to understand it first.
       </>
     ),
   },
@@ -31,12 +32,12 @@ const agents = [
     title: "Family & a beagle",
     borderClass: "border-l-amber-500/70",
     dotClass: "bg-amber-400",
+    dotColor: "#fbbf24",
     src: "/images/sections/section-life-family.png",
-    alt: "Placeholder art: family and dog (replace with your photo)",
+    alt: "Venkatesh TV with family",
     body: (
       <>
-        Away from work, I&apos;m with <span className="text-slate-200">family</span> — and our beagle, who has strong
-        opinions about walk times and treats.
+        Away from work, I&apos;m with <span className="text-white">family</span> — and our beagle, who has strong opinions about walk times and treats.
       </>
     ),
   },
@@ -45,19 +46,10 @@ const agents = [
 const COSMIC_W = 1000;
 const COSMIC_H = 620;
 
-/** Dense, colorful starfield — full-bleed cosmic canvas */
 const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }[] = (() => {
   const palette = [
-    "#ffffff",
-    "#fef08a",
-    "#fde047",
-    "#a5f3fc",
-    "#fda4af",
-    "#e9d5ff",
-    "#bbf7d0",
-    "#fcd34d",
-    "#f0abfc",
-    "#7dd3fc",
+    "#ffffff", "#fef08a", "#fde047", "#a5f3fc",
+    "#fda4af", "#e9d5ff", "#bbf7d0", "#fcd34d", "#f0abfc", "#7dd3fc",
   ];
   let s = 314159;
   const out: { x: number; y: number; r: number; o: number; fill: string }[] = [];
@@ -79,9 +71,9 @@ const COSMIC_STARS: { x: number; y: number; r: number; o: number; fill: string }
 export default function BeyondDeskAgents() {
   return (
     <div className="overflow-hidden rounded-2xl border border-[#3c3c3c] bg-[#0d1117] shadow-[0_32px_80px_-28px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04]">
-      {/* Full cosmic canvas: title bar, tagline, tripundra + life status (third eye at center band) */}
-      <div className="relative flex min-h-[480px] flex-col sm:min-h-[580px]">
-        {/* Full-bleed colorful space + stars */}
+      <div className="relative flex min-h-[520px] flex-col sm:min-h-[600px]">
+
+        {/* Cosmic background */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <svg
             className="h-full w-full"
@@ -133,7 +125,6 @@ export default function BeyondDeskAgents() {
               <circle key={`cosmic-star-${i}`} cx={star.x} cy={star.y} r={star.r} fill={star.fill} opacity={star.o} />
             ))}
           </svg>
-          {/* Extra vivid color wash (CSS) for depth */}
           <div
             className="absolute inset-0 mix-blend-screen opacity-40"
             style={{
@@ -141,21 +132,21 @@ export default function BeyondDeskAgents() {
                 "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(236,72,153,0.45), transparent 50%), radial-gradient(ellipse 70% 45% at 85% 25%, rgba(56,189,248,0.5), transparent 55%), radial-gradient(ellipse 60% 40% at 50% 90%, rgba(251,191,36,0.4), transparent 50%)",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-transparent to-[#0f0a1a]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/95 via-[#020617]/30 to-[#0f0a1a]/50" />
         </div>
 
-        <div className="relative z-10 flex min-h-0 flex-1 flex-col border-b border-white/10 pb-6">
-          {/* Title bar — glass on cosmic */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/25 px-4 py-2.5 backdrop-blur-md">
-            <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-[#e2e8f0] sm:text-xs">
-              <span className="truncate text-[#7dd3fc] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">life-orchestrator</span>
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+          {/* Title bar */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-black/30 px-5 py-3 backdrop-blur-md">
+            <div className="flex min-w-0 items-center gap-2.5 font-mono text-xs text-[#e2e8f0]">
+              <span className="truncate font-semibold text-[#7dd3fc] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">life-orchestrator</span>
               <span className="text-[#94a3b8]">·</span>
-              <span className="hidden sm:inline text-cyan-300/90">multi-agent</span>
-              <span className="rounded border border-[#38bdf8]/30 bg-[#0f172a]/60 px-1.5 py-0.5 text-[10px] text-[#fef08a]">
+              <span className="hidden text-cyan-300/90 sm:inline">multi-agent</span>
+              <span className="rounded border border-[#38bdf8]/30 bg-[#0f172a]/60 px-2 py-0.5 text-[11px] text-[#fef08a]">
                 3 agents
               </span>
             </div>
-            <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#4ade80]">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#4ade80]">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-50" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80]" />
@@ -164,66 +155,69 @@ export default function BeyondDeskAgents() {
             </div>
           </div>
 
-          <p className="px-4 pt-6 text-center font-mono text-[11px] text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-6 sm:text-xs">
-            <span className="text-fuchsia-300">✦</span> Three systems I actively run in parallel — each shaping how I think, build, and operate.{" "}
-            .
+          {/* Tagline */}
+          <p className="px-5 pt-7 text-center font-mono text-sm text-[#fef08a] drop-shadow-[0_0_12px_rgba(250,204,21,0.5)] sm:px-8">
+            <span className="text-fuchsia-300">✦</span>{" "}
+            Three systems I actively run in parallel — each shaping how I think, build, and operate.
           </p>
 
-          {/* Tripundra + life status — full width; bands flex to fill column; description flows inline */}
-          <div className="mt-8 flex w-full min-h-0 flex-1 flex-col px-4 sm:px-6">
-            <p className="shrink-0 font-mono text-[11px] text-[#b4bcc8] sm:text-xs">
+          {/* Agent list */}
+          <div className="mt-7 flex w-full min-h-0 flex-1 flex-col px-5 pb-8 sm:px-8">
+            <p className="shrink-0 font-mono text-sm text-[#b4bcc8]">
               <span className="text-[#79c0ff]">$</span> life status --agents
             </p>
 
             <div
-              className="relative mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-sm border-2 border-white/95 bg-[#050608]/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_32px_rgba(255,255,255,0.06)] backdrop-blur-[2px]"
+              className="relative mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-white/20 bg-[#050608]/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm"
               role="group"
-              aria-label="Agents"
+              aria-label="Life agents"
             >
-              {/* One / life — behind tripundra (same amber gradient + glow as before; layer stays back) */}
+              {/* "One life" watermark */}
               <div
                 className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
                 aria-hidden
               >
-                <div className="relative flex select-none flex-col items-center justify-center opacity-[0.28] sm:opacity-[0.34]">
-                  <div
-                    className="absolute h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(251,191,36,0.55)_0%,transparent_72%)] blur-2xl"
-                  />
-                  <div className="absolute top-[18%] h-20 w-px bg-gradient-to-b from-amber-200/80 via-amber-400/35 to-transparent" />
-                  <span className="relative bg-gradient-to-b from-amber-50 to-amber-300 bg-clip-text font-display text-5xl font-semibold tracking-tight text-transparent drop-shadow-[0_0_40px_rgba(251,191,36,0.55)] sm:text-6xl md:text-7xl">
+                <div className="relative flex select-none flex-col items-center justify-center opacity-[0.22]">
+                  <div className="absolute h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(251,191,36,0.55)_0%,transparent_72%)] blur-2xl" />
+                  <span className="relative bg-gradient-to-b from-amber-50 to-amber-300 bg-clip-text font-display text-6xl font-semibold tracking-tight text-transparent drop-shadow-[0_0_40px_rgba(251,191,36,0.55)] sm:text-7xl">
                     One
                   </span>
-                  <span className="relative mt-0.5 font-mono text-2xl tracking-[0.4em] text-amber-100/95 drop-shadow-[0_0_24px_rgba(251,191,36,0.4)] sm:text-3xl">
+                  <span className="relative mt-1 font-mono text-2xl tracking-[0.4em] text-amber-100/95 sm:text-3xl">
                     life
                   </span>
-                  <span
-                    className="relative mt-3 rounded-full bg-amber-300 shadow-[0_0_14px_#fcd34d,0_0_28px_rgba(251,191,36,0.35)]"
-                    style={{ width: 7, height: 7 }}
-                  />
                 </div>
               </div>
 
               {agents.map((a, i) => (
                 <div key={a.id} className="relative z-10 flex min-h-0 flex-1 flex-col">
                   <div
-                    className={`h-[3px] shrink-0 bg-white shadow-[0_0_10px_rgba(255,255,255,0.45)] ${i === 1 ? "mx-auto w-[90%]" : "w-full"}`}
+                    className={`h-px shrink-0 bg-white/20 ${i === 0 ? "hidden" : ""}`}
                     aria-hidden
                   />
-                  <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center px-4 py-4 sm:px-6 sm:py-5">
-                    <p className="font-mono text-[11px] leading-relaxed text-[#cbd5e1] sm:text-xs">
-                      <span className="text-[#7ee787]">●</span>{" "}
-                      <span className="font-medium text-[#79c0ff]">{a.title}</span>{" "}
-                      <span className="text-[#8b949e]">RUNNING</span>{" "}
-                      <span className="text-[#484f58]">—</span>{" "}
-                      <span className="text-[#d2a8ff]">description:</span>{" "}
-                      <span className="font-sans text-[#e2e8f0]">{a.body}</span>
-                    </p>
+                  <div className="flex min-h-0 flex-1 flex-col justify-center gap-2 px-5 py-5 sm:px-6 sm:py-6">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full"
+                        style={{ background: a.dotColor, boxShadow: `0 0 8px ${a.dotColor}` }}
+                        aria-hidden
+                      />
+                      <span className="font-mono text-xs font-semibold uppercase tracking-widest text-slate-400">
+                        {a.id}
+                      </span>
+                      <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-400">
+                        RUNNING
+                      </span>
+                    </div>
+                    <div className="pl-[18px]">
+                      <p className="font-display text-lg font-medium text-white sm:text-xl">{a.title}</p>
+                      <p className="mt-1 font-sans text-sm leading-relaxed text-slate-300 sm:text-base">{a.body}</p>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <p className="mt-6 w-full shrink-0 border-t-2 border-white/30 pt-4 text-center font-mono text-[11px] text-[#8b949e] sm:text-xs">
+            <p className="mt-5 w-full shrink-0 border-t border-white/15 pt-4 text-center font-mono text-sm text-[#8b949e]">
               <span className="text-[#ffa657]">merge</span>
               <span className="text-[#c9d1d9]">(</span>
               <span className="text-[#79c0ff]">builder</span>
@@ -238,40 +232,6 @@ export default function BeyondDeskAgents() {
           </div>
         </div>
       </div>
-
-      {/* Cards — supporting detail; smaller imagery so diagram stays hero */}
-      {/* <div className="grid gap-0 border-t border-[#30363d] bg-[#0a0d12] sm:grid-cols-2 lg:grid-cols-3">
-        {agents.map((a, i) => (
-          <article
-            key={a.id}
-            className={`group relative border-b border-[#30363d] bg-gradient-to-b from-white/[0.04] to-transparent transition-colors hover:bg-white/[0.03] sm:border-b-0 lg:border-r lg:border-[#30363d] lg:last:border-r-0 ${a.borderClass} border-l-4`}
-          >
-            <div className="flex items-center justify-between border-b border-white/[0.06] bg-black/25 px-3 py-2 font-mono text-[10px] text-slate-400 sm:px-4 sm:text-[11px]">
-              <span className="truncate text-slate-300">{a.id}</span>
-              <span className="flex shrink-0 items-center gap-1.5">
-                <span className="text-[#8b949e]">↔</span>
-                <span className={`h-1.5 w-1.5 rounded-full ${a.dotClass}`} aria-hidden />
-                <span className="text-emerald-400/90">sync</span>
-              </span>
-            </div>
-            <div className="relative aspect-[2/1] w-full overflow-hidden sm:aspect-[16/10]">
-              <Image
-                src={a.src}
-                alt={a.alt}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                priority={i === 0}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent" />
-            </div>
-            <div className="p-4 sm:p-5">
-              <h3 className="font-display text-base font-medium tracking-[-0.02em] text-white sm:text-lg">{a.title}</h3>
-              <div className="mt-2 font-sans text-xs leading-relaxed text-slate-400 sm:text-sm">{a.body}</div>
-            </div>
-          </article>
-        ))}
-      </div> */}
     </div>
   );
 }

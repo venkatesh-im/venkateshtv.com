@@ -10,7 +10,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const lowlight = createLowlight(common);
 
@@ -45,6 +45,9 @@ function Divider() {
 }
 
 export default function TipTapEditor({ content, onChange, placeholder = "Start writing..." }: TipTapEditorProps) {
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -94,6 +97,22 @@ export default function TipTapEditor({ content, onChange, placeholder = "Start w
       editor.commands.setContent(content, false);
     }
   }, [content, editor]);
+
+  const handleImageUpload = useCallback(async (file: File) => {
+    if (!editor) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        editor.chain().focus().setImage({ src: data.url }).run();
+      }
+    } finally {
+      setUploading(false);
+    }
+  }, [editor]);
 
   const setLink = useCallback(() => {
     if (!editor) return;
@@ -275,6 +294,36 @@ export default function TipTapEditor({ content, onChange, placeholder = "Start w
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M10 10h10M4 14h16M10 18h10" />
           </svg>
         </ToolbarButton>
+
+        <Divider />
+
+        {/* Image upload */}
+        <ToolbarButton
+          onClick={() => imageInputRef.current?.click()}
+          title="Insert Image"
+        >
+          {uploading ? (
+            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          )}
+        </ToolbarButton>
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleImageUpload(file);
+            e.target.value = "";
+          }}
+        />
 
         <Divider />
 

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 const PHOTOS = [
   { src: "/venkatesh-tv.jpg", alt: "Venkatesh TV" },
+  { src: "/venkatesh-tv-2.jpeg", alt: "Venkatesh TV" },
+  { src: "/venkatesh-tv-3.jpeg", alt: "Venkatesh TV" },
   { src: "/venkatesh-tv-4.jpg", alt: "Venkatesh TV" },
 ] as const;
 

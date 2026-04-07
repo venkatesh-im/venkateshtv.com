@@ -103,6 +103,28 @@ export default function Header() {
               </svg>
               LinkedIn
             </a>
+            <Link
+              href="/contact"
+              className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+              style={{
+                color: "#e2e8f0",
+                border: "1px solid rgba(37,99,235,0.4)",
+                background: "rgba(37,99,235,0.12)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(37,99,235,0.22)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(37,99,235,0.65)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(37,99,235,0.12)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(37,99,235,0.4)";
+              }}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Contact me
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -165,6 +187,14 @@ export default function Header() {
             >
               LinkedIn ↗
             </a>
+            <Link
+              href="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              style={{ color: "#60a5fa" }}
+            >
+              Contact me
+            </Link>
           </div>
         )}
       </div>

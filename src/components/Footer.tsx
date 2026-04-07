@@ -31,7 +31,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm text-slate-500">
-              2× CTO · CEO &amp; Founder, Impelox · 60+ people · Chennai, India
+              2× CTO · CEO &amp; Founder at Impelox · Building AI agents from Chennai, India
             </p>
           </div>
 

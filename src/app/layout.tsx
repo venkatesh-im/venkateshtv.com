@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces, Source_Serif_4 } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -89,6 +90,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full w-full ${dmSans.variable} ${fraunces.variable} ${sourceSerif.variable}`}>
       <body className="min-h-screen w-full min-w-0 bg-[#020617] font-sans text-slate-100 antialiased">
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-V0N0YMYBM7" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V0N0YMYBM7');
+          `}
+        </Script>
         {children}
       </body>
     </html>

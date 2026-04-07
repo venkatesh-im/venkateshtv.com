@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -29,6 +29,7 @@ interface PostFormProps {
     title: string;
     slug: string;
     excerpt: string;
+    coverImage: string;
     content: string;
     published: boolean;
   };
@@ -40,11 +41,27 @@ export default function PostForm({ mode, post }: PostFormProps) {
   const [title, setTitle] = useState(post?.title || "");
   const [slug, setSlug] = useState(post?.slug || "");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
+  const [coverImage, setCoverImage] = useState(post?.coverImage || "");
   const [content, setContent] = useState(post?.content || "");
   const [published, setPublished] = useState(post?.published || false);
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(!!post?.slug);
   const [saving, setSaving] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
   const [error, setError] = useState("");
+  const coverInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCoverUpload = useCallback(async (file: File) => {
+    setUploadingCover(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) setCoverImage(data.url);
+    } finally {
+      setUploadingCover(false);
+    }
+  }, []);
 
   const handleTitleChange = useCallback(
     (value: string) => {
@@ -89,6 +106,7 @@ export default function PostForm({ mode, post }: PostFormProps) {
       title: title.trim(),
       slug: slug.trim(),
       excerpt: excerpt.trim() || null,
+      coverImage: coverImage || null,
       content,
       published: publishOverride !== undefined ? publishOverride : published,
     };
@@ -188,6 +206,58 @@ export default function PostForm({ mode, post }: PostFormProps) {
             />
           </div>
         </div>
+      </div>
+
+      {/* Cover Image */}
+      <div className="card p-6">
+        <label className="label mb-3">Cover Image</label>
+        {coverImage ? (
+          <div className="relative">
+            <img src={coverImage} alt="Cover" className="w-full max-h-64 object-cover rounded-lg" />
+            <button
+              type="button"
+              onClick={() => setCoverImage("")}
+              className="absolute top-2 right-2 btn-danger px-2 py-1 text-xs"
+            >
+              Remove
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => coverInputRef.current?.click()}
+            disabled={uploadingCover}
+            className="btn-secondary w-full justify-center py-8 border-dashed"
+          >
+            {uploadingCover ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Uploading...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Click to upload cover image
+              </>
+            )}
+          </button>
+        )}
+        <input
+          ref={coverInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleCoverUpload(file);
+            e.target.value = "";
+          }}
+        />
       </div>
 
       {/* Content Editor */}

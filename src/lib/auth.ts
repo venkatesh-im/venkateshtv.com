@@ -12,6 +12,26 @@ export async function getAuthToken(request: NextRequest) {
   });
 }
 
+// In-memory rate limiter — max 5 attempts per IP per 15 minutes
+const loginAttempts = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = loginAttempts.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    loginAttempts.set(ip, { count: 1, resetAt: now + 15 * 60 * 1000 });
+    return true;
+  }
+
+  if (entry.count >= 5) {
+    return false;
+  }
+
+  entry.count++;
+  return true;
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -20,9 +40,19 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email", placeholder: "admin@venkateshtv.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) {
           return null;
+        }
+
+        // Rate limiting by IP
+        const ip =
+          (req?.headers?.["x-forwarded-for"] as string)?.split(",")[0].trim() ||
+          (req?.headers?.["x-real-ip"] as string) ||
+          "unknown";
+
+        if (!checkRateLimit(ip)) {
+          throw new Error("Too many login attempts. Try again in 15 minutes.");
         }
 
         const adminEmail = process.env.ADMIN_EMAIL;
@@ -37,16 +67,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // Support both plain text (for simple setups) and bcrypt hashed passwords
-        let isValidPassword = false;
-
-        if (adminPassword.startsWith("$2")) {
-          // Bcrypt hash
-          isValidPassword = await bcryptjs.compare(credentials.password, adminPassword);
-        } else {
-          // Plain text comparison (for development; in production, use hashed passwords)
-          isValidPassword = credentials.password === adminPassword;
-        }
+        const isValidPassword = await bcryptjs.compare(credentials.password, adminPassword);
 
         if (!isValidPassword) {
           return null;
@@ -65,7 +86,7 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 8 * 60 * 60, // 8 hours
   },
   callbacks: {
     async jwt({ token, user }) {
