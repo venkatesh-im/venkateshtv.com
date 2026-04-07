@@ -27,7 +27,9 @@ export default function ZohoContactForm() {
         if (zf_ifrm_data.length === 2 || zf_ifrm_data.length === 3) {
           const zf_perma = zf_ifrm_data[0];
           const zf_ifrm_ht_nw = parseInt(zf_ifrm_data[1], 10) + 15 + "px";
-          const iframe = container.querySelector("iframe");
+          const el = document.getElementById(FORM_DIV_ID);
+          if (!el) return;
+          const iframe = el.querySelector("iframe");
           if (
             iframe &&
             iframe.src.indexOf("formperma") > 0 &&
