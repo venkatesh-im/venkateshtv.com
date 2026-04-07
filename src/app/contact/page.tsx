@@ -4,8 +4,32 @@ import Footer from "@/components/Footer";
 import ZohoContactForm from "@/components/ZohoContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact — Venkatesh TV",
+  title: "Contact",
   description: "Get in touch with Venkatesh TV — AI agents, tech leadership, and mentorship.",
+  alternates: {
+    canonical: "https://www.venkateshtv.com/contact",
+  },
+  openGraph: {
+    title: "Contact | Venkatesh TV",
+    description: "Get in touch with Venkatesh TV — AI agents, tech leadership, and mentorship.",
+    type: "website",
+    url: "https://www.venkateshtv.com/contact",
+    siteName: "Venkatesh TV",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Contact Venkatesh TV",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact | Venkatesh TV",
+    description: "Get in touch with Venkatesh TV — AI agents, tech leadership, and mentorship.",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function ContactPage() {

@@ -76,19 +76,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const description = post.excerpt || truncate(stripHtml(post.content), 160);
 
+  const postUrl = `https://www.venkateshtv.com/posts/${post.slug}`;
+
   return {
     title: post.title,
     description,
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
       title: post.title,
       description,
       type: "article",
+      url: postUrl,
+      siteName: "Venkatesh TV",
       publishedTime: post.createdAt.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
       authors: ["Venkatesh TV"],
       images: [
         {
-          url: "/og-image.png",
+          url: post.coverImage || "/opengraph-image",
           width: 1200,
           height: 630,
           alt: post.title,
@@ -99,7 +106,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: post.title,
       description,
-      images: ["/og-image.png"],
+      images: [post.coverImage || "/opengraph-image"],
     },
   };
 }
@@ -125,8 +132,39 @@ export default async function PostPage({ params }: Props) {
 
   const { older, newer } = await getAdjacentPosts(post.createdAt);
 
+  const postUrl = `https://www.venkateshtv.com/posts/${post.slug}`;
+  const description = post.excerpt || truncate(stripHtml(post.content), 160);
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description,
+    url: postUrl,
+    datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    author: {
+      "@type": "Person",
+      name: "Venkatesh TV",
+      url: "https://www.venkateshtv.com",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Venkatesh TV",
+      url: "https://www.venkateshtv.com",
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+    ...(post.coverImage && { image: post.coverImage }),
+  };
+
   return (
     <div className="relative flex min-h-screen w-full min-w-0 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
       <ReadingProgress />
 
       <div
