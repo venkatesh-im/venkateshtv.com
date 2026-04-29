@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAuthToken } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -85,6 +86,10 @@ export async function PUT(request: NextRequest, { params }: Params) {
       },
     });
 
+    revalidatePath("/");
+    revalidatePath("/posts");
+    revalidatePath(`/posts/${post.slug}`);
+
     return NextResponse.json(post);
   } catch (error) {
     console.error(`[PUT /api/posts/${params.id}]`, error);
@@ -106,6 +111,10 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     }
 
     await prisma.post.delete({ where: { id: params.id } });
+
+    revalidatePath("/");
+    revalidatePath("/posts");
+    revalidatePath(`/posts/${existing.slug}`);
 
     return NextResponse.json({ message: "Post deleted successfully" });
   } catch (error) {
