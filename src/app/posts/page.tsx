@@ -55,7 +55,8 @@ async function getAllPosts() {
       },
     });
     return posts;
-  } catch {
+  } catch (e) {
+    console.error("[getAllPosts]", e);
     return [];
   }
 }

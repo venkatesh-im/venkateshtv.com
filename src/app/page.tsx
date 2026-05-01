@@ -28,7 +28,8 @@ async function getRecentPosts() {
       },
     });
     return posts;
-  } catch {
+  } catch (e) {
+    console.error("[getRecentPosts]", e);
     return [];
   }
 }
